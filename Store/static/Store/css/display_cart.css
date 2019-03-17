@@ -1,0 +1,29 @@
+
+.cart-item-preview{
+    
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: 100px 200px 1fr 200px 200px;
+    grid-template-areas: "cover info . quantity price";
+    align-items: center;
+    margin-bottom: 2px;
+    padding: 20px 20px;
+}
+
+.cover-image-cart{
+    grid-area: cover;
+    height: 100px;
+    width: 65px;
+}
+
+.book-info{
+    grid-area: info;
+}
+
+.quantity{
+    grid-area: quantity;
+}
+
+.price{
+    grid-area: price;
+}

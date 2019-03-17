@@ -1,31 +1,37 @@
 {% extends 'Store/base.html' %}
 
+{% block css %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_cart.css' %}">
+{% endblock css %}
+
 
 {% block body %}
 
 {% if cart %}
 
 
-<table>
-    <thead>
-        <tr>
-            <th>Tytuł</th>
-            <th>Autor</th>
-            <th>Cena</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in cart %}
-            <tr>
-                <th>{{ item.book.title }}</th>
-                <th>{{ item.book.author }}</th>
-                <th>{{ item.book_type.price }}</th>
-                <th>{{ item.quantity }}</th>
-            </tr>
-         {% endfor %}   
-    </tbody>    
 
-</table>
+    
+        {% for item in cart %}
+            <div class="cart-item-preview">
+                <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
+                <div class="book-info">
+                    <p>{{ item.book.title }}</p>
+                    <p> {% for author in item.book.authors.all %}
+                        {{ author.first_name}}
+                        {% endfor %}
+                    </p>
+                    <p>{{ item.book.book_type }}</p>
+                </div>
+                
+                    <span class="quantity">{{ item.quantity }}</span>
+                    <span class="price">{{ item.book_type.price }}</span>
+               
+            </div>
+         {% endfor %}   
+    
 
 {% else %}
  <p>Nic tu nie ma</p>

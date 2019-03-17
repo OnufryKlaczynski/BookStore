@@ -2,20 +2,65 @@
 
 {% block css %}
 {% load static%}
-<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_author.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/book_detail.css' %}"> 
 {% endblock css%}
 
 
 {% block body %}
-    <div>
-        <img src="{{book.cover_photo.url }}"/>
+    <div class="book-container">
+        <img class="book-cover" src="{{book.cover_photo.url }}"/>
         
-        <p>{{book.title }}</p>
-        {% for author in book.authors.all %}
-            <p>author.get_name</p>
-        {% endfor %}
-        <div>{{book.description}}</div>
+        <div class="book-info">
+            <p>{{book.title }}</p>
+            {% for author in book.authors.all %}
+                <p>{{ author }}</p>
+            {% endfor %}
+            <p>{{book.category}}</p>
+            <div class="tags">
+                {% for tag in book.tags.all %}
+                    <span>{{tag}}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="shop-info">
+            {% if book.ebook %}
+            <div class="ebook">
+                ebook
+                {{ book.ebook.price}}
+            </div>
+            {% endif %}
+            {% if book.audio_book%}
+            <div class="audio-book">
+                audiobook
+                {{ book.audio_book.price}}
+            </div>
+            {% endif %}
+            {% if book.paper_book %}
+            <div class="paper-book">
+                Okładka {{book.paper_book.cover }}
+                {{book.paper_book.price }}
+            </div>
+            {% endif %}
+        </div>
 
-    </div>    
+
+        <div class="book-description">{{book.description}}</div>
+
+    </div>
+    
+    <div class="">
+        <h1>Inne książki tego autora</h1>
+        
+        {% for other_book in other_books %}
+
+            <div class="other-book">
+                <img class="other-cover" src="{{ other_book.cover_photo.url }}"/>
+                <p> {{other_book}}</p>
+                <p>{{other_book.paper_book.price}}</p>   
+            </div>
+
+            
+        {% endfor %}
+    </div>
 
 {% endblock body %}

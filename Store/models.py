@@ -58,12 +58,19 @@ class Person(models.Model):
     second_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     
+    def __str__(self):
+        if(self.second_name):
+            return f'{self.first_name} {self.second_name} {sefl.last_name}'
+        return f'{self.first_name} {self.last_name}'
+        
     class Meta:
         abstract = True
 
+
 class Author(Person):
     avatar = models.ImageField(upload_to="Books", null=True, blank=True)
-    # description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
 
 class Reader(Person):
     pass
@@ -75,11 +82,15 @@ class Reader(Person):
 class Tag(models.Model):
     text = models.CharField(max_length = 40)
     
+    def __str__(self):
+        return self.text
 
 
 class Category(models.Model):
     text = models.CharField(max_length = 40)
 
+    def __str__(self):
+        return self.text
 
 
 class Order(models.Model):

@@ -28,8 +28,9 @@ class Index(View):
 class BookDetail(View):
     def get(self, request, pk):
         book = get_object_or_404(Book, pk=pk)
-
-        return render(request, 'Store/book_detail.html', {'book':book})
+        other_books = [other_book for other_book in book.authors.all()[0].books.all() if other_book.pk != book.pk ] 
+        print(other_books)
+        return render(request, 'Store/book_detail.html', {'book':book, 'other_books':other_books})
 
 
 
