@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from .models import Book, Author, Reader
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST
@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 import json
 
 from .cart import CART, Cart
-
+from .forms import OrderForm
 
 
 
@@ -59,7 +59,31 @@ class DisplayCart(View):
         
         return render(request, 'Store/display_cart.html', {'cart':cart})
 
+    def post(self, request):
+        cart = Cart(request)
+        
+        return redirect('Store:choose_account_method')
 
+
+class ChooseAccountMethod(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            pass
+
+        return render(request, 'Store/choose_account_method.html', {})
+
+    def post(self):
+        pass
+
+
+class CreateOrder(View):
+    def get(self, request):
+        order_form = OrderForm()
+
+        return render(request, 'Store/create_order.html', {'order_form':order_form})
+    
+    def post(self, reqeust):
+        pass
 
 
 @csrf_exempt

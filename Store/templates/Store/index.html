@@ -18,7 +18,7 @@
                 <h1 class="title">{{ book.title }}</h1>
                 {% for author in book.authors.all %}
         
-                    <a href="{% url 'Store:author_detail' author.pk  %}" >{{author.first_name}} {{author.last_name}}</a>
+                    <a href="{% url 'Store:author_detail' author.pk  %}" >{{ author }}</a>
                 {% endfor %}
                 
                 <div>

@@ -1,0 +1,11 @@
+{% extends "Store/base.html" %}
+
+{% block css %}
+{% load static%}
+{% endblock css%}
+
+{% block body %}
+
+    <a href="{% url 'Store:create_order' %}">Zapłać bez konta</a>
+
+{% endblock body %}

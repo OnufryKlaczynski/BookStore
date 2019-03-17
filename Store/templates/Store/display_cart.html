@@ -13,24 +13,40 @@
 
 
 
-    
-        {% for item in cart %}
-            <div class="cart-item-preview">
-                <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
-                <div class="book-info">
-                    <p>{{ item.book.title }}</p>
-                    <p> {% for author in item.book.authors.all %}
-                        {{ author.first_name}}
-                        {% endfor %}
-                    </p>
-                    <p>{{ item.book.book_type }}</p>
-                </div>
-                
-                    <span class="quantity">{{ item.quantity }}</span>
-                    <span class="price">{{ item.book_type.price }}</span>
-               
+        <h1>Mój koszyk</h1>
+        <div class="cart-container">
+
+            <div class="items">
+                {% for item in cart %}
+                    <div class="cart-item-preview">
+                        <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
+                        <div class="book-info">
+                            <p>{{ item.book.title }}</p>
+                            <p> {% for author in item.book.authors.all %}
+                                {{ author.first_name}}
+                                {% endfor %}
+                            </p>
+                            <p>{{ item.book.book_type }}</p>
+                        </div>
+                        
+                            <span class="quantity">{{ item.quantity }}</span>
+                            <span class="price">{{ item.book_type.price }}</span>
+                       
+                    </div>
+                 {% endfor %}
             </div>
-         {% endfor %}   
+             
+             
+             <div class="cart-summary">
+                <p>Całkowity koszt: {{cart.price}}</p>
+                <p>Ilość przedmiotów: {{cart.quantity}}</p>
+    
+                <form action="{% url 'Store:display_cart' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Przejdź dalej</button>
+                </form>
+             </div>
+        </div>
     
 
 {% else %}
