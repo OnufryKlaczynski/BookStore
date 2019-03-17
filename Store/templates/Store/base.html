@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Store/css/base.css' %}">
+    
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+<header>
+    <h1 id="logo"><a href="{% url 'Store:index' %}">MojeLogo</a></h1>
+    <form id="search">
+        <input type="text" placeholder="Czego szukasz?">
+        <button type="submit">
+            <i class="material-icons">search</i>
+        </button>
+    </form>
+    <a id="favourites" href=""><i class="material-icons">star_border</i></a>
+    <a id="settings" href=""><i class="material-icons">settings</i></a>
+    <a href="{% url 'Store:display_cart' %}">
+        <div id="cart">
+            {% if cart%}
+                <i class="material-icons">shopping_cart</i>
+                <span id="cart-quantity"> {{ cart.quantity }}</span>
+                <span id="cart-price"> {{ cart.price }} </span>
+            {% else %}
+                <span> Brak przedmiotów </span>
+            {% endif %}
+        <div>
+    </a>
+
+</header>
+
+<main>
+
+    
+    {% block body %}
+    {% endblock  %}
+    
+</main>
+
+
+ {% block javascript %}
+ {% endblock %}
+</body>
+ </html>

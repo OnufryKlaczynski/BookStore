@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Store/css/base.css' %}"> 
+
+    {% block css %}
+    {% endblock %}
+</head>
+
+<body>
+<header>
+    <h1><a href="{% url 'Store:index' %}">Book Store</a></h1> 
+    
+
+</header>
+
+<main>
+
+    
+    {% block body %}
+    {% endblock  %}
+    
+</main>
+
+
+ {% block javascript %}
+ {% endblock %}
+</body>
+ </html>

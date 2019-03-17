@@ -1,0 +1,21 @@
+{% extends "Store/base.html" %}
+
+{% block css %}
+{% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_author.css' %}"> 
+{% endblock css%}
+
+
+{% block body %}
+    <div>
+        <img src="{{book.cover_photo.url }}"/>
+        
+        <p>{{book.title }}</p>
+        {% for author in book.authors.all %}
+            <p>author.get_name</p>
+        {% endfor %}
+        <div>{{book.description}}</div>
+
+    </div>    
+
+{% endblock body %}

@@ -1,0 +1,30 @@
+.book-preview-containter{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+
+
+.book-preview{
+    display: grid;
+    justify-content: center;
+    width: 300px;
+    height: 400px;
+
+
+    margin: 2px;
+    border: 1px solid rgb(0,0,0,.0975);
+    background-color: #fff;
+}
+
+.cover-image{
+    justify-self: center;
+    width: 140px;
+    height: 190px;
+    padding: 10px
+}
+
+.title{
+    font-size:140%;
+}

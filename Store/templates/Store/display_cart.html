@@ -1,0 +1,34 @@
+{% extends 'Store/base.html' %}
+
+
+{% block body %}
+
+{% if cart %}
+
+
+<table>
+    <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Cena</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+            <tr>
+                <th>{{ item.book.title }}</th>
+                <th>{{ item.book.author }}</th>
+                <th>{{ item.book_type.price }}</th>
+                <th>{{ item.quantity }}</th>
+            </tr>
+         {% endfor %}   
+    </tbody>    
+
+</table>
+
+{% else %}
+ <p>Nic tu nie ma</p>
+{% endif %}
+
+{% endblock body %}

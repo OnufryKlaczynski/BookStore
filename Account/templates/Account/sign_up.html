@@ -1,0 +1,27 @@
+{% extends 'Account/base.html' %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Account/css/forms.css' %}"> 
+{% endblock css %}
+
+{% block body %}
+
+    <form class="form" action="{% url 'Account:sign_up' %}" method="post">
+        {% csrf_token %}
+
+        {{form.email.label_tag}}
+        {{form.email}}
+    
+        {{ form.password1.label_tag }}
+        {{ form.password1 }}
+    
+    
+        {{ form.password2.label_tag }}
+        {{ form.password2 }}
+
+        <input type="submit" value="Sign Up">
+    </form>
+
+
+{% endblock body %}

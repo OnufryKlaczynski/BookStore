@@ -1,0 +1,9 @@
+{% extends "Store/base.html" %}
+
+
+{% block body %}
+    {% for author in authors%}
+        <a href="{% url 'Store:author_detail' author.pk %}">{{ author.first_name}} {{author.second_name}} {{author.last_name}} </a>
+
+    {% endfor %}
+{% endblock body %}
