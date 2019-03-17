@@ -49,8 +49,8 @@ header{
     border-bottom: 1px solid rgb(0,0,0,.0975);
     height: 60px;
     display: grid;
-    grid-template-columns: 1fr 300px 500px repeat(4, 100px) 1fr;
-    grid-template-areas: ". logo search fav set cart cart .";
+    grid-template-columns: 1fr 300px 500px 1fr repeat(3, 50px) 1fr;
+    grid-template-areas: ". logo search . fav set cart cart .";
     align-items: center;
 }   
 
@@ -73,10 +73,25 @@ form#search{
     border-radius: 4px;
     background-color:#fafafa;
     color: rgba(0, 0, 0, 0.397);
+    padding: 4px;
+}
+
+
+input{
+    width: 91%;
+    position: relative;
+    padding-left: 7px; 
+    top: -3px; 
 }
 button[type=submit]{
+    position: relative;
+    top: 3px;
     color: rgba(0, 0, 0, 0.63);
     
+}
+button[type=submit]:hover{
+    color: rgba(0, 0, 0, 0.925);
+    cursor: pointer;
 }
 
 #favourites{
@@ -90,4 +105,33 @@ button[type=submit]{
 }
 
 
+#cart-quantity-wrapper {
+    position: relative;
+    left: -14px;
+    display:inline-block;
+    line-height:0px;    
+    
+    border-radius:50%;
+    border:2px solid;
+    font-size:12px;
+    border-color:#0000009b;
+    background-color:#0000009b;
+    color: #fafafa;
+}
 
+#cart-quantity-wrapper span {
+    display:inline-block;
+    
+    padding-top:50%;
+    padding-bottom:50%;
+    
+    margin-left:4px;
+    margin-right:4px;
+
+    font-weight: 500px;
+}
+#cart-price{
+    position: relative;
+    left: -8px;
+    font-size: 90%;
+}
