@@ -1,17 +1,79 @@
 {% extends "Store/base.html" %}
 
 {% block css %}
+
 {% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/forms.css' %}">
+<link href="https://ssl.dotpay.pl/test_payment/widget/payment_widget.min.css" rel="stylesheet">
 {% endblock css%}
 
 {% block body %}
 
 
-    <form action="">
-        {{ order_form}}
+    <form id="order-form" action="">
+        <p id="personal-info">
+            Dane zamawiającego:
+        </p>
+        <div class="personal-info">
+            {{ order_form.email.label_tag}}
+            {{ order_form.email}}
+    
+            {{ order_form.first_name.label_tag}}
+            {{ order_form.first_name}}
+    
+            {{ order_form.last_name.label_tag}}
+            {{ order_form.last_name}}
+        </div>
+
+        <p id="delivery-info">Dane adresowe: </p>
+        <div >
+            {{ order_form.house_number.label_tag}}
+            {{ order_form.house_number}}
+    
+            {{ order_form.street.label_tag}}
+            {{ order_form.street}}
+            
+    
+            {{ order_form.city.label_tag}}
+            {{ order_form.city}}
+            
+    
+            {{ order_form.zip_code.label_tag}}
+            {{ order_form.zip_code}}
+            
+    
+            {{ order_form.voivodeship.label_tag}}
+            {{ order_form.voivodeship}}
+    
+            {{ order_form.additional_info.label_tag}}
+            {{ order_form.additional_info}}
+            
+        </div>
+        
+
+
 
     </form>
-
+    <div class="my-form-widget-container"></div>
 
 
 {% endblock body %}
+
+{% block javascript %}
+<script id="dotpay-payment-script" src="https://ssl.dotpay.pl/test_payment/widget/payment_widget.js"></script>
+<script type="text/javascript">
+    var dotpayWidgetConfig = { 
+      sellerAccountId: '790190',
+      amount: '100.00',
+      currency: 'PLN',
+      lang: 'pl',
+      widgetFormContainerClass: 'my-form-widget-container',
+      channelsWrapperContainerClass: 'my-channels-wrapper',
+      widgetClass: 'my-widget-class',
+      selectedWidgets: ['formWidget'],
+      offlineChannel: 'mark',
+      offlineChannelTooltip: true,
+      debug: true
+    }
+</script>
+{% endblock javascript %}
