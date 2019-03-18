@@ -48,10 +48,17 @@
             <div class="paper-book">
                 Okładka {{book.paper_book.cover }}
                 <p>{{book.paper_book.price }}</p>
-                <i id="remove-icon" class="small material-icons">remove</i>
-                <input id="quantity" type="text" value="1"/> 
-                <i id="add-icon" class="small material-icons">add</i>
-                <a id="add-to-cart" href="#">Dodaj do wózka</a>
+                <i id="remove-icon" class="small material-icons" onclick="changeQuantityValue(-1)">remove</i>
+                <input id="quantity" type="text" value="1" /> 
+                <i id="add-icon" class="small material-icons" onclick="changeQuantityValue(1)">add</i>
+                <a id="add-to-cart"
+                    href="#"
+                    onclick="addToCartFromInput(event)"
+                    data-book-id="{{book.id}}" 
+                    data-book-type="paper_book"
+                    data-book-price="{{book.paper_book.price}}">
+                    Dodaj do wózka
+                </a>
             </div>
             {% endif %}
         </div>
@@ -67,8 +74,10 @@
 
             <div class="other-book">
                 <img class="other-cover" src="{{ other_book.cover_photo.url }}"/>
-                <p> {{other_book}}</p>
-                <p> {{other_book.paper_book.price}} </p>   
+                
+                    <p> {{other_book}}</p>
+                    <p> {{other_book.paper_book.price}} </p>   
+               
             </div>
 
             
@@ -79,6 +88,7 @@
 
 
 {% block javascript %}
-    
+<script type="text/javascript" src="{% static 'Store/js/quantityForm.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/addToCart.js' %}" > </script> 
 
 {% endblock javascript %}

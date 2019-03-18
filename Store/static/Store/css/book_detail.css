@@ -51,6 +51,12 @@
 #remove-icon, #add-icon {
     display: inline;
     cursor: pointer;
+
+
+    user-select: none; 
+    -ms-user-select: none;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
 }
 
 #quantity{
@@ -60,4 +66,9 @@
 }
 #add-to-cart{
     display: block;
+}
+
+.other-book{
+    display: inline-block;
+    width: 180px;
 }
