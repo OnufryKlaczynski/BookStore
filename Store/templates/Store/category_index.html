@@ -1,0 +1,16 @@
+{% extends "Store/base.html" %}
+
+{% block css %}
+{% load static%}
+    <link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}"> 
+{% endblock css%}
+
+
+{% block body %}
+    {% include "Store/books_index.html" %}
+
+{% endblock body %}
+
+
+{% block javascript %}
+{% endblock javascript %}

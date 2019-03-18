@@ -16,7 +16,7 @@
 
     {% for book in books %}
         
-        <a href="{% url 'Store:book_detail' book.id %}">
+        <a href="{% url 'Store:book_detail' book.id book.slug %}">
             <img src="{{book.cover_photo.url }}"/>
             <p> {{book.title}} </p>
         </a>

@@ -1,0 +1,48 @@
+<div class="book-preview-containter">
+        {% for book in books %}
+            
+            <div class="book-preview">
+                {% load static %}
+                <a href="{% url 'Store:book_detail' book.id book.slug %}">
+                    <img class="cover-image" src="{{ book.cover_photo.url }}" alt="{{ book.title }}"/>
+                </a>
+                <h1 class="title">{{ book.title }}</h1>
+                {% for author in book.authors.all %}
+        
+                    <a href="{% url 'Store:author_detail' author.pk  %}" >{{ author }}</a>
+                {% endfor %}
+                
+                <div>
+                    <p>Książka | {{ book.paper_book.cover }}</p>
+                    <p class="price">{{ book.paper_book.price }} </p>
+                    <div class="addToCart-button">
+                        <a href="#" onclick="addToCart(event);"
+                            data-book-id="{{book.id}}" 
+                            data-book-type="paper_book"
+                            data-book-price="{{book.paper_book.price}}">
+                            Dodaj do wózka
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+            
+        {% endfor %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if books.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ books.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ books.number }} of {{ books.paginator.num_pages }}.
+                </span>
+        
+                {% if books.has_next %}
+                    <a href="?page={{ books.next_page_number }}">next</a>
+                    <a href="?page={{ books.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>

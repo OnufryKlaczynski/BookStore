@@ -1,23 +1,36 @@
-.book-preview-containter{
+
+.index-main-container{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "categories books"
+}
+
+.categories{
+    grid-area: categories;
+}
+
+.book-preview-containter{
+    grid-template-areas: books;
 }
 
 
 
 
+
+.book-preview-containter{
+    grid-area: ;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
 .book-preview{
     display: grid;
     justify-content: center;
     width: 300px;
     height: 400px;
-
-
     margin: 2px;
     border: 1px solid rgb(0,0,0,.0975);
     background-color: #fff;
 }
-
 .cover-image{
     justify-self: center;
     width: 140px;

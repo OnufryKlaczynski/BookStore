@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-from .models import Book, Author, Reader
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
@@ -10,6 +9,7 @@ from django.core.paginator import Paginator
 
 import json
 
+from .models import Book, Author, Reader, Category, Tag
 from .cart import CART, Cart
 from .forms import OrderForm
 
@@ -22,11 +22,18 @@ class Index(View):
         paginator = Paginator(books, 12)
         page = request.GET.get('page')
         books_page = paginator.get_page(page)
-        return render(request, 'Store/index.html', {'books': books_page})
+
+        categories = Category.objects.all()
+
+        return render(request, 'Store/index.html', 
+                {
+                'books': books_page, 
+                'categories':categories,
+                })
 
 
 class BookDetail(View):
-    def get(self, request, pk):
+    def get(self, request, pk, slug):
         book = get_object_or_404(Book, pk=pk)
         other_books = [other_book for other_book in book.authors.all()[0].books.all() if other_book.pk != book.pk ] 
         print(other_books)
@@ -109,3 +116,27 @@ def add_to_cart(request):
     return JsonResponse({"status":"error"})
 
 
+class CategoriesIndex(View):
+
+    def get(self, request, pk):
+        # category = Category.objects.filter(slug=category_slug)
+        category = get_object_or_404(Category, pk=pk)
+        books = category.books.all()
+        paginator = Paginator(books, 12)
+        page = request.GET.get('page')
+        books_page = paginator.get_page(page)
+        return render(request, 'Store/category_index.html', {'category':category, 'books':books_page})
+
+
+class TagsIndex(View):
+
+    def get(self, request):
+        tags = request.GET.getlist('tag')
+        tags = Tag.objects.filter(text__in=tags)
+        books_page = []
+        if(tags):
+            books = Book.objects.filter(tags__in=tags)
+            paginator = Paginator(books, 12)
+            page = request.GET.get('page')
+            books_page = paginator.get_page(page)
+        return render(request, 'Store/tags.html', {"books":books_page})

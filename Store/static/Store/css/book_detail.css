@@ -4,8 +4,11 @@
     grid-template-columns: 300px 200px 1fr 200px;
     
     grid-template-areas: 
-        "cover info . shop-info"
+        "cover info type add"
         "desc desc desc .";
+    grid-row-gap: 10px;
+    
+    padding: 30px;
 
 }
 
@@ -13,6 +16,7 @@
     grid-area: cover;
     width: 150;
     height: 300px;
+
 }
 
 .book-info{
@@ -20,15 +24,40 @@
 }
 
 .shop-info{
-    grid-area: shop-info;
+    grid-area: type;
+    align-self: end;
+    justify-self: right;
 }
+
 .book-description{
     grid-area: desc;
 }
 
-
-
 .other-cover{
     width: 95px;
     height: 140px;
+}
+
+.price-info{
+    grid-area: add;
+}
+
+.tag{
+    color: rgba(0, 0, 0, 0.76);
+    background-color: rgba(0, 0, 0, 0.096);
+    padding: 1px 3px 2px 3px;
+}
+
+#remove-icon, #add-icon {
+    display: inline;
+    cursor: pointer;
+}
+
+#quantity{
+    padding: 0;
+    width: 30px;
+    text-align: center;
+}
+#add-to-cart{
+    display: block;
 }

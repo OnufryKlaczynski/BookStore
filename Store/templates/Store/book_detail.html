@@ -11,14 +11,14 @@
         <img class="book-cover" src="{{book.cover_photo.url }}"/>
         
         <div class="book-info">
-            <p>{{book.title }}</p>
+            <h1 class="title">{{book.title }}</h1>
             {% for author in book.authors.all %}
-                <p>{{ author }}</p>
+                <p class="author">{{ author }}</p>
             {% endfor %}
-            <p>{{book.category}}</p>
+            <p class="category">{{book.category}}</p>
             <div class="tags">
                 {% for tag in book.tags.all %}
-                    <span>{{tag}}</span>
+                    <a class="tag" href="{% url 'Store:tags' %}?tag={{tag.text}}">#{{tag}}</a>
                 {% endfor %}
             </div>
         </div>
@@ -43,6 +43,18 @@
             {% endif %}
         </div>
 
+        <div class="price-info">
+            {% if book.paper_book %}
+            <div class="paper-book">
+                Okładka {{book.paper_book.cover }}
+                <p>{{book.paper_book.price }}</p>
+                <i id="remove-icon" class="small material-icons">remove</i>
+                <input id="quantity" type="text" value="1"/> 
+                <i id="add-icon" class="small material-icons">add</i>
+                <a id="add-to-cart" href="#">Dodaj do wózka</a>
+            </div>
+            {% endif %}
+        </div>
 
         <div class="book-description">{{book.description}}</div>
 
@@ -56,7 +68,7 @@
             <div class="other-book">
                 <img class="other-cover" src="{{ other_book.cover_photo.url }}"/>
                 <p> {{other_book}}</p>
-                <p>{{other_book.paper_book.price}}</p>   
+                <p> {{other_book.paper_book.price}} </p>   
             </div>
 
             
@@ -64,3 +76,9 @@
     </div>
 
 {% endblock body %}
+
+
+{% block javascript %}
+    
+
+{% endblock javascript %}

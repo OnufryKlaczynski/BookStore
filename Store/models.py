@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.utils.text import slugify
 
 class Book(models.Model):
     authors = models.ManyToManyField("Author", related_name="books")
@@ -14,8 +14,14 @@ class Book(models.Model):
     series = models.ForeignKey("Series", on_delete=models.CASCADE, related_name="books", blank=True, null=True)
     cover_photo = models.ImageField(upload_to="Books", null=True, blank=True)
 
-    category = models.ForeignKey("Category", on_delete=models.SET_NULL, blank=True, null=True)
+    category = models.ForeignKey("Category", related_name="books", on_delete=models.SET_NULL, blank=True, null=True)
     tags = models.ManyToManyField("Tag", related_name="books", blank=True)
+
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Book, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.title}'
@@ -62,7 +68,12 @@ class Person(models.Model):
         if(self.second_name):
             return f'{self.first_name} {self.second_name} {sefl.last_name}'
         return f'{self.first_name} {self.last_name}'
-        
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.__str__())
+        super(Person, self).save(*args, **kwargs)
+
+
     class Meta:
         abstract = True
 
@@ -80,17 +91,25 @@ class Reader(Person):
 
     
 class Tag(models.Model):
-    text = models.CharField(max_length = 40)
+    text = models.CharField(max_length = 40, unique=True)
     
     def __str__(self):
         return self.text
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.text)
+        super(Tag, self).save(*args, **kwargs)
+
 
 class Category(models.Model):
-    text = models.CharField(max_length = 40)
+    text = models.CharField(max_length = 40, unique=True)
 
     def __str__(self):
         return self.text
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.text)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Order(models.Model):
