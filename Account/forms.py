@@ -12,3 +12,18 @@ class SignUpForm(UserCreationForm):
         fields = ['email', 'password1', 'password2']
     
     
+
+class OrderDataForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = [
+             'first_name',
+             'last_name',
+             'house_number',
+             'street',
+             'city',
+             'zip_code',
+             'voivodeship',
+             'additional_info',
+             ]

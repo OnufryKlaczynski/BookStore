@@ -3,6 +3,7 @@
 {% block css %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/index.css' %}"> 
 {% endblock css %}
 
 
@@ -11,7 +12,7 @@
     <div class="index-main-container">
         <div class="categories">
             {% for category in categories %}
-                <a href="{% url 'Store:categories' category.id %}">{{ category }}</a>
+                <a class="category-link" href="{% url 'Store:categories' category.id %}">{{ category|capfirst}}</a>
             {% endfor %}
         </div>
         

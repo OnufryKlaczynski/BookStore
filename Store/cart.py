@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from .models import Book
+from .models import Book, OrderItem, Order
 
 CART = 'cart'
 
@@ -57,7 +57,22 @@ class Cart:
                 item = {'quantity':quantity, 'book':books[i], 'book_type':book_with_type}
                 yield item
 
+    def create_order_items(self, order):
+        order_items = []
+        for book_id in self.cart.keys():
+            for book_type in self.cart[book_id].keys():
 
+                book_dict = self.cart[book_id][book_type]
+                book = Book.objects.get(pk=book_id)
+                book_type_model = getattr(book, book_type)
+                price = book_type_model.price
+                quantity = int(book_dict['quantity'])
+                
+                item = OrderItem.objects.create(order=order, book=book, book_type=book_type, price=price, quantity=quantity)
+                item.save()
+                order_items.append(item)
+
+        return order_items
 
     def save(self):
         self.session.modified = True

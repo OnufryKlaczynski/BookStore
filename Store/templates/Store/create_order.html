@@ -4,13 +4,14 @@
 
 {% load static%}
 <link rel="stylesheet" type="text/css" href="{% static 'Store/css/forms.css' %}">
-<link href="https://ssl.dotpay.pl/test_payment/widget/payment_widget.min.css" rel="stylesheet">
+
 {% endblock css%}
 
 {% block body %}
 
 
-    <form id="order-form" action="">
+    <form id="order-form" action="{% url 'Store:create_order' %}" method="post">
+        {% csrf_token %}
         <p id="personal-info">
             Dane zamawiającego:
         </p>
@@ -52,7 +53,7 @@
         
 
 
-
+        <input type="submit" value="Przejdź dalej"/>
     </form>
     <div class="my-form-widget-container"></div>
 
@@ -60,20 +61,5 @@
 {% endblock body %}
 
 {% block javascript %}
-<script id="dotpay-payment-script" src="https://ssl.dotpay.pl/test_payment/widget/payment_widget.js"></script>
-<script type="text/javascript">
-    let dotpayWidgetConfig = { 
-      sellerAccountId: '790190',
-      amount: '100.00',
-      currency: 'PLN',
-      lang: 'pl',
-      widgetFormContainerClass: 'my-form-widget-container',
-      channelsWrapperContainerClass: 'my-channels-wrapper',
-      widgetClass: 'my-widget-class',
-      selectedWidgets: ['formWidget'],
-      offlineChannel: 'mark',
-      offlineChannelTooltip: true,
-      debug: true
-    }
-</script>
+
 {% endblock javascript %}

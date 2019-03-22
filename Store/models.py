@@ -113,11 +113,11 @@ class Category(models.Model):
 
 
 class Order(models.Model):
-    email = models.EmailField(_('email adress'), unique=True)
+    email = models.EmailField(_('email adress'))
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     
-    creation_date = models.DateTimeField(blank=True, null=True)    
+    creation_date = models.DateTimeField(auto_now=True, blank=True, null=True, )    
 
     house_number = models.CharField(max_length=12, blank=True, null=True)
     street = models.CharField(max_length=30, blank=True, null=True)
@@ -133,7 +133,8 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
 
-    order = models.ForeignKey("Order", on_delete=models.CASCADE)
+    order = models.ForeignKey("Order", related_name="items", on_delete=models.CASCADE)
     book = models.ForeignKey("Book", on_delete=models.CASCADE)
+    book_type = models.CharField(max_length = 20)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     quantity = models.PositiveIntegerField(default=1)

@@ -1,7 +1,7 @@
 .book-container{
     display: grid;
     background-color: #fff; 
-    grid-template-columns: 300px 200px 1fr 200px;
+    grid-template-columns: 300px 300px 1fr 200px;
     
     grid-template-areas: 
         "cover info type add"
@@ -27,7 +27,10 @@
     grid-area: type;
     align-self: end;
     justify-self: right;
+    width: 120px;
+    
 }
+
 
 .book-description{
     grid-area: desc;
@@ -68,7 +71,80 @@
     display: block;
 }
 
+
+#add-cart-icon{
+    position: relative;
+    top: 4px;
+}
+
+.title{
+    font-size: 1.2em;
+    margin-bottom: 0.3em;
+}
+.author{
+    margin-bottom: 0.25em;
+
+}
+.category{
+    display: block;
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.76);
+    margin-bottom: 0.2em;
+}
+.tag{
+    display: inline-block;
+    margin-top: 0.3em;
+    margin-right: 0.1em;
+}
+
+.ebook p{
+    display: block;
+}
+
+.audio-book p{
+    display: block;
+}
+
+.paper-book p{
+    display: block;
+}
+
+.ebook, .audio-book, .paper-book{
+    border: 1px solid rgba(0, 0, 0, 0.46);
+    border-radius: 5px;
+    padding: 8px 4px;
+    margin: 4px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ebook p.book-type,
+.audio-book p.book-type,
+.paper-book p.book-type{
+    
+    font-size: 0.85em;
+    color: rgba(0, 0, 0, 0.76);
+}
+
+#choosen{
+    border-color: rgba(25, 158, 25, 0.55);
+    border-width: 3px;
+}
+
+#other-books-header{
+    font-size: 1.3em;
+    margin-bottom: 20px;
+}
+
+#other-books-segment{
+    margin-top: 30px;    
+}
+
 .other-book{
     display: inline-block;
     width: 180px;
+    height: 200px;
+    vertical-align: top;
 }

@@ -1,4 +1,4 @@
-
+'use strict';
 
 function addToCart(e, quantity=1){
     e.preventDefault();
