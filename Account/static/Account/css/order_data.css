@@ -1,0 +1,13 @@
+.profile-container{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+.book-mark{
+    display: block;
+    padding: 10px;
+}
+
+.active{
+    color: rgba(10, 228, 126, 0.925);
+}

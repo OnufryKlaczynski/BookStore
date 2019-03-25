@@ -1,5 +1,7 @@
 
 
+// It could be changed on css pseudo-class focus-within 
+
 function changeSearchFormColorOnFocus(){
     let element = document.querySelector("form#search");
     console.log(element);

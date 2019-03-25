@@ -75,6 +75,9 @@ form#search{
     color: rgba(0, 0, 0, 0.397);
     padding: 4px;
 }
+form#search:focus-within{
+    
+}
 
 
 input{

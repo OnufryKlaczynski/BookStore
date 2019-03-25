@@ -14,6 +14,7 @@ class SignUp(View):
         form = SignUpForm()
         return render(request, 'Account/sign_up.html', {'form':form})
 
+
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -32,7 +33,6 @@ class SignUp(View):
 
 
 class AccountOptions(LoginRequiredMixin,View):
-    
     
     def get(self, request):
         user = request.user
@@ -61,6 +61,6 @@ class OrderHistory(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
-        orders = user.orders
+        orders = user.orders.all()
 
         return render(request, 'Account/order_history.html', {'orders':orders})

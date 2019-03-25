@@ -1,20 +1,13 @@
 
 form{
-    margin: 0 auto;
-   
+    padding: 20px 20px;    
+    background-color: #fff;
 }
 
 label{
     display: block;
     margin-bottom: 2px;
 
-}
-
-form{
-    margin: 0 auto;
-    padding: 20px 20px;
-    width: 400px;
-    background-color: #fff;
 }
 
 input[type=text], input[type=password], input[type=email]{

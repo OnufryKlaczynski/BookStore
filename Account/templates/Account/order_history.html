@@ -1,0 +1,20 @@
+{% extends "Account/base.html" %}
+
+{% block css %}
+{% load static%}
+{% endblock css%}
+
+
+{% block body %}
+    
+    {% for order in orders %}
+
+        {{order}}
+
+    {% endfor %}
+
+{% endblock body %}
+
+
+{% block javascript %}
+{% endblock javascript %}
