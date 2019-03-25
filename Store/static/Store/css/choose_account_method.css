@@ -1,0 +1,55 @@
+
+.container{
+    display: grid;
+    grid-template-columns: 400px 400px;
+    grid-column-gap: 30px;
+    justify-content: center;
+}
+
+.method{
+    
+   
+}
+
+
+
+
+
+.register-button, .without-account-button{
+    display: block;
+    width: 200px;
+    margin-bottom: 20px;
+    background-color:  rgba(10, 228, 126, 0.657);
+    border-radius: 6px;
+    padding: 12px 12px;
+    color: rgba(255, 255, 255, 0.9);    
+    font-weight: 600;
+    
+
+}
+.register-button:hover, .without-account-button:hover{ 
+    background-color: rgba(10, 228, 126, 0.925);
+}
+
+.header-like{
+    font-size: 1.3em;
+    color: rgba(0,0,0, .5);
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(0,0,0, .5);
+    margin-bottom: 8px; 
+
+}
+
+.register{
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.spaceing{
+    padding: 20px;
+    background-color: #fff;
+    height:200px;
+
+}

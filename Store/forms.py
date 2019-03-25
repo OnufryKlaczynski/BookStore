@@ -20,9 +20,6 @@ class DotPayForm(forms.Form):
     amount = forms.CharField(widget = forms.HiddenInput())
     current = forms.CharField(widget = forms.HiddenInput())
     description = forms.CharField(widget = forms.HiddenInput())
-
-    channel=  forms.CharField(widget = forms.HiddenInput())
-
     type = forms.IntegerField(widget = forms.HiddenInput())
     URL = forms.CharField(widget = forms.HiddenInput())
     URLC = forms.CharField(widget = forms.HiddenInput())

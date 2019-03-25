@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 
+
+from Account.models import User
+
 class Book(models.Model):
     authors = models.ManyToManyField("Author", related_name="books")
     title = models.CharField(max_length=100)
@@ -66,7 +69,7 @@ class Person(models.Model):
     
     def __str__(self):
         if(self.second_name):
-            return f'{self.first_name} {self.second_name} {sefl.last_name}'
+            return f'{self.first_name} {self.second_name} {self.last_name}'
         return f'{self.first_name} {self.last_name}'
     
     def save(self, *args, **kwargs):
@@ -114,27 +117,33 @@ class Category(models.Model):
 
 class Order(models.Model):
     email = models.EmailField(_('email adress'))
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    first_name = models.CharField(_('first name'), max_length=30)
+    last_name = models.CharField(_('last name'), max_length=30)
     
     creation_date = models.DateTimeField(auto_now=True, blank=True, null=True, )    
 
-    house_number = models.CharField(max_length=12, blank=True, null=True)
-    street = models.CharField(max_length=30, blank=True, null=True)
-    city = models.CharField(max_length=30, blank=True, null=True)
-    zip_code = models.CharField(max_length=10, blank=True, null=True)
-    voivodeship = models.CharField(max_length=30, blank=True, null=True)
+    house_number = models.CharField(max_length=12, )
+    street = models.CharField(max_length=30, )
+    city = models.CharField(max_length=30, )
+    zip_code = models.CharField(max_length=10, )
+    voivodeship = models.CharField(max_length=30, )
     additional_info = models.CharField(max_length=200, blank=True, null=True)
 
 
     paid = models.BooleanField(default=False)
     paid_date = models.DateTimeField(blank=True, null=True)
 
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="orders" )
+
 
 class OrderItem(models.Model):
 
     order = models.ForeignKey("Order", related_name="items", on_delete=models.CASCADE)
     book = models.ForeignKey("Book", on_delete=models.CASCADE)
-    book_type = models.CharField(max_length = 20)
+    book_type = models.CharField(max_length=20)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     quantity = models.PositiveIntegerField(default=1)
+
+
+    def __str__(self):
+        return f'{self.book_type}, {self.book}, {self.price}, {self.quantity}'

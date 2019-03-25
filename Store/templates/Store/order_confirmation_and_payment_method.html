@@ -3,6 +3,7 @@
 {% block css %}
 {% load static%}
 <link href="https://ssl.dotpay.pl/test_payment/widget/payment_widget.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_cart.css' %}">
 {% endblock css%}
 
 
@@ -31,7 +32,14 @@ Przyjmuję do wiadomości, że w celu realizacji procesu płatności Administrat
 <div class="cart-container">
 
     <div class="items">
-        {% comment %}
+        <div class="cart-item-preview">
+          <span>.</span>
+          <span>Tytuł</span>
+          <span>Typ</span>
+          <span>Ilość</span>
+          <span>Cena</span>
+          <span>Cena całkowita</span>
+        </div>
         {% for item in items %}
            <div class="cart-item-preview">
                 <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
@@ -41,14 +49,15 @@ Przyjmuję do wiadomości, że w celu realizacji procesu płatności Administrat
                         {{ author.first_name}}
                         {% endfor %}
                     </p>
-                    <p>{{ item.book_type }}</p>
-                </div>
+                  </div>
+                  <p>{{ item.book_type }}</p>
                 
                     <span class="quantity">{{ item.quantity }}</span>
-                    <span class="price">{{ item.book_type.price }}</span>
-               
+                    <span class="price">{{ item.price }}</span>
+                    {% load multiply_tag %}
+                    <span class="total-item-price">{%  multiply item.quantity item.price %}</span>
             </div> 
-         {% endfor %}  {% endcomment %}
+         {% endfor %}  
     </div>
      
      
@@ -76,4 +85,11 @@ Przyjmuję do wiadomości, że w celu realizacji procesu płatności Administrat
       debug: true
     }
 </script>
+
+<script>
+  const selectedElement  = document.querySelector("#selected");
+  console.log(selectedElement) 
+  
+</script>
+
 {% endblock javascript %}

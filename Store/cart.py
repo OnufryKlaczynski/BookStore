@@ -1,14 +1,18 @@
+from django.db.models.query import QuerySet
+
 from decimal import Decimal
 
 from .models import Book, OrderItem, Order
 
+
 CART = 'cart'
+
 
 class Cart:
 
-    def __init__(self, request):
-        self.request = request
-        self.session = request.session
+    def __init__(self, session):
+        
+        self.session = session
         cart = self.session.get(CART, None)
         if not cart:
             self.session[CART] = {}
@@ -16,7 +20,7 @@ class Cart:
         self.cart = self.session.get(CART, None)
     
 
-    def add_item(self, book_id, book_type, price):
+    def add_item(self, book_id:id, book_type:str, price:Decimal):
         
         if not self.cart.get(book_id, None):
             self.cart[book_id] = {}
@@ -57,6 +61,7 @@ class Cart:
                 item = {'quantity':quantity, 'book':books[i], 'book_type':book_with_type}
                 yield item
 
+
     def create_order_items(self, order):
         order_items = []
         for book_id in self.cart.keys():
@@ -69,10 +74,10 @@ class Cart:
                 quantity = int(book_dict['quantity'])
                 
                 item = OrderItem.objects.create(order=order, book=book, book_type=book_type, price=price, quantity=quantity)
-                item.save()
                 order_items.append(item)
 
         return order_items
+
 
     def save(self):
         self.session.modified = True

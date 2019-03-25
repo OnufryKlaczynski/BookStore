@@ -2,10 +2,52 @@
 
 {% block css %}
 {% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/login_form.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/choose_account_method.css' %}">
 {% endblock css%}
 
 {% block body %}
+    
+        <div class="container">
+            <div class="method">
+                <form class="login-form" method="post" action="{% url 'login' %}">
+                        <p class="header-like">Logowanie</p>
+                    {% csrf_token %}
+                  
+                    <div class="input-field">
+                      
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        
+                    </div>
+                    <div>
+                      
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                    
+                    </div>
+            
+                    <input type="submit" value="Zaloguj" />
+                    <input type="hidden"  name="next" value="{{ next }}" />
+                    
+                    
+                    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+                </form>
+                
+                <div class="register">
+                    <p class="header-like">Rejestracja</p>
+                    <p>Nie masz konta? </p>
+                    <a class="register-button" href="{% url 'Account:sign_up' %}">Zarejestruj się</a>  
+                </div>
+            </div>
+        
+            <div class="spaceing">
+                <p class="header-like">Kup bez rejestracji</p>
+                <span>Nie masz konta i nie chcesz go zkładać?</span>
+                <a class="without-account-button" href="{% url 'Store:create_order' %}">Zapłać bez konta</a>
+            
+            </div>
+        </div>
 
-    <a href="{% url 'Store:create_order' %}">Zapłać bez konta</a>
 
 {% endblock body %}

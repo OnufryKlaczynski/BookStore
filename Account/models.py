@@ -22,6 +22,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     voivodeship = models.CharField(max_length=30, blank=True, null=True)
     additional_info = models.CharField(max_length=200, blank=True, null=True)
 
+    
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

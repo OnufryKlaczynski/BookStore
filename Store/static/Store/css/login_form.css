@@ -1,0 +1,34 @@
+
+.login-form{
+    padding: 20px 20px;
+    background-color: #fff;
+}
+
+
+.login-form input[type=text], .login-form input[type=password],  .login-form input[type=email]{
+    display: block;
+    padding: 8px;
+    border: 1px solid rgba(0,0,0,.0975);
+    border-radius: 3px;
+    margin-bottom: 16px; 
+}
+
+.login-form label{
+    margin-bottom: 4px;
+    display: block;
+    font-size: 80%;
+    color: rgb(0,0,0,.7)
+}
+
+.login-form input[type=submit]{
+    background-color:  rgba(10, 228, 126, 0.657);
+    border-radius: 6px;
+    padding: 12px 12px;
+    color: rgba(255, 255, 255, 0.9);    
+    font-weight: 600;
+    
+
+}
+.login-form input[type=submit]:hover{
+    background-color: rgba(10, 228, 126, 0.925);
+}

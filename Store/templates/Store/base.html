@@ -27,7 +27,7 @@
         </button>
     </form>
     <a id="favourites" href=""><i class="material-icons">star_border</i></a>
-    <a id="settings" href=""><i class="material-icons">settings</i></a>
+    <a id="settings" href="{% url 'Account:account_options' %}"><i class="material-icons">settings</i></a>
     <a href="{% url 'Store:display_cart' %}">
         <div id="cart">
             {% if cart%}

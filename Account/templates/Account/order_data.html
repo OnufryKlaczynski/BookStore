@@ -1,0 +1,7 @@
+
+
+<form action="{% url 'Account:account_options' %}" method="post">
+    {% csrf_token %}
+    {{ order_data_form }}
+    <input type="submit" value="Zapisz">
+</form>

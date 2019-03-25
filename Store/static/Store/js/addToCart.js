@@ -1,4 +1,3 @@
-'use strict';
 
 function addToCart(e, quantity=1){
     e.preventDefault();
@@ -8,7 +7,7 @@ function addToCart(e, quantity=1){
     const bookType = element.getAttribute('data-book-type');
     const price = element.getAttribute('data-book-price');
     const baseUrl = window.location.origin;
-    url = "/store/add_to_cart/";
+    const url = "/store/add_to_cart/";
     data = { 
         id: bookId,
         type: bookType,

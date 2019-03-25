@@ -6,9 +6,14 @@ from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate
 
+from functools import reduce
+from decimal import Decimal
 import json
 import urllib
+
 
 from .models import Book, Author, Reader, Category, Tag, Order
 from .cart import CART, Cart
@@ -64,12 +69,12 @@ class AuthorDetail(View):
 class DisplayCart(View):
 
     def get(self, request):
-        cart = Cart(request)
+        cart = Cart(request.session)
         
         return render(request, 'Store/display_cart.html', {'cart':cart})
 
     def post(self, request):
-        cart = Cart(request)
+        cart = Cart(request.session)
         
         return redirect('Store:choose_account_method')
 
@@ -91,7 +96,7 @@ def add_to_cart(request):
         return JsonResponse({"status":"error"})
 
     if(book):
-        cart = Cart(request)
+        cart = Cart(request.session)
         cart.add_item(book_id, book_type, str(price))
         return JsonResponse({"status": "ok"})
 
@@ -125,29 +130,26 @@ class TagsIndex(View):
 
 
 class CreateOrder(View):
+
     def get(self, request):
-        # order_id = request.session.get('order', None)
-        # if order_id:
-        #     try:
-        #         order = Order.objects.get(pk=order_id)
-        #         # order_form = OrderForm(instance=order)
-        #     except Order.DoesNotExist:
-        #         pass
-        order_form = OrderForm()
+        if request.user.is_authenticated:
+            order_form = OrderForm(instance=request.user)
+        else:
+            order_form = OrderForm()
         return render(request, 'Store/create_order.html', {'order_form':order_form})
     
     def post(self, request):
         
         order_form = OrderForm(request.POST)
-        print(order_form.errors)
+        
         if order_form.is_valid():
             order = order_form.save()
-            cart = Cart(request)
+            cart = Cart(request.session)
             items = cart.create_order_items(order)
             order.items.set(items)
             
             request.session['order'] = order.pk
-            
+            del request.session[CART]
             return redirect(reverse('Store:order_confirmation'))
         
         return render(request, 'Store/create_order.html', {'order_form':order_form})
@@ -155,24 +157,23 @@ class CreateOrder(View):
 
 class OrderConfirmation(View):
     
-    def get(self, reqeust):
-        amount = "10.00"
+    def get(self, request):
+        order_id = request.session.get('order')
+        order = Order.objects.get(pk=order_id)
+        amount = reduce(lambda value, item:  value+ (Decimal(item.price)*item.quantity), order.items.all(), 0)
+        print(amount)
         currency = "PLN"
-        description = "nie wiem"
         urlc = urllib.parse.urljoin("http://127.0.0.1:8000", reverse('Store:success'))
         url = ''
-        channel = 1
-        firstname = 'asdfasdf'
-        lastname = 'asdfasf'
-        email = 'asd@wp.pl'
+        firstname = order.first_name
+        lastname = order.last_name
+        email = order.email
         data_for_dot_pay = {
             'api_version':'dev',
             'id':790190,
             'amount': amount,
-            'current': currency,
-            'description' : description,
-            
-            'channel': channel,
+            'currency': currency,
+            'description' : f"Zamówienie dla {firstname} {lastname} na kwote {amount}",
             'firstname':firstname,
             'lastname':lastname,
             'email':email,
@@ -183,12 +184,12 @@ class OrderConfirmation(View):
             'personal_data': 1,
         }
         dotpay_form = DotPayForm(initial=data_for_dot_pay)
-        order_pk = reqeust.session.get('order')
+        order_pk = request.session.get('order')
         order = get_object_or_404(Order, pk=order_pk)
         items = order.items.all()
         if(order):
             return render(
-                reqeust,
+                request,
                  'Store/order_confirmation_and_payment_method.html',
                   {
                       "order":order,
@@ -230,12 +231,14 @@ def dotpay_server_confirmation(request):
 
 
 class ChooseAccountMethod(View):
+
+
     def get(self, request):
         if request.user.is_authenticated:
-            pass
+            return redirect(reverse("Store:create_order"))
+        form = AuthenticationForm()
+        next = reverse('Store:order_confirmation')
+        return render(request, 'Store/choose_account_method.html', {'form':form, 'next':next})
 
-        return render(request, 'Store/choose_account_method.html', {})
-
-    def post(self):
+    def post(self, request):
         pass
-
