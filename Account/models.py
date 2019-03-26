@@ -3,6 +3,8 @@ from django.contrib.auth.models import  AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
+from django.apps import apps
+
 
 from .managers import UserManager
 
@@ -22,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     voivodeship = models.CharField(max_length=30, blank=True, null=True)
     additional_info = models.CharField(max_length=200, blank=True, null=True)
 
-    
+    observed = models.ManyToManyField("Store.Book", blank=True)
 
     objects = UserManager()
 

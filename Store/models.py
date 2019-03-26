@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 
-
-from Account.models import User
+User = get_user_model()
 
 class Book(models.Model):
     authors = models.ManyToManyField("Author", related_name="books")
@@ -133,7 +133,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     paid_date = models.DateTimeField(blank=True, null=True)
 
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name="orders" )
+    user = models.ForeignKey(User, related_name="orders", blank=True, null=True, on_delete=models.SET_NULL, )
 
 
 class OrderItem(models.Model):

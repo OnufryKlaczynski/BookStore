@@ -3,9 +3,12 @@ from django.views import View
 from django.contrib.auth import login, authenticate
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from .forms import SignUpForm, OrderDataForm
 
+from Store.models import Book
 
 
 class SignUp(View):
@@ -61,6 +64,31 @@ class OrderHistory(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
-        orders = user.orders
+        orders = user.orders.all()
 
         return render(request, 'Account/order_history.html', {'orders':orders})
+
+
+class ObservedBooks(LoginRequiredMixin, View):
+
+    def get(self, request):
+        user = request.user
+        observed = user.observed.all()
+
+        return render(request, 'Account/observed.html', {'observed':observed})
+
+
+    def post(self, request, pk):
+
+        user = request.user
+        book = get_object_or_404(Book, pk=pk)
+        user.observed.add(book)
+
+        return JsonResponse({"status":"ok"})
+
+    def delete(self, request, pk):
+        user = request.user
+        book = get_object_or_404(Book, pk=pk)
+        user.observed.remove(book)
+        
+        return JsonResponse({"status":"ok"})
