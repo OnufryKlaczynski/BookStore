@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
+from django.contrib.auth import get_user_model
 
 from functools import reduce
 from decimal import Decimal
@@ -143,11 +144,14 @@ class CreateOrder(View):
         order_form = OrderForm(request.POST)
         
         if order_form.is_valid():
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            if request.user.is_authenticated:
+                order.user = request.user
+            order.save()
             cart = Cart(request.session)
             items = cart.create_order_items(order)
             order.items.set(items)
-            
+            order.save() #TODO: Is it necessary, check
             request.session['order'] = order.pk
             del request.session[CART]
             return redirect(reverse('Store:order_confirmation'))
