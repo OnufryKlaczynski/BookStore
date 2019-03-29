@@ -68,7 +68,7 @@
         </div>
 
         <div class="price-info">
-            
+            <i id="add-to-favourites" class="material-icons" data-book-id="{{book.id}}" onclick="addToObserved(event)">star_border </i> 
             <div class="">
                 <div id="swapable">
 
@@ -119,7 +119,10 @@
 
 
 {% block javascript %}
+
 <script type="text/javascript" src="{% static 'Store/js/quantityForm.js' %}" > </script> 
 <script type="text/javascript" src="{% static 'Store/js/addToCart.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/addToObserved.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/getCookie.js' %}" > </script> 
 
 {% endblock javascript %}

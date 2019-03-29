@@ -1,20 +1,81 @@
 {% extends "Account/base.html" %}
 
 {% block css %}
-{% load static%}
-{% endblock css%}
-
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'Account/css/order_history.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'Account/css/order_data.css' %}"> 
+    
+{% endblock css %}
 
 {% block body %}
+<div class="profile-container">
     
-    {% for order in orders %}
+    <div class="bookmark-container">
+            <a class="book-mark active" href="{% url 'Account:account_options' %}">Dane do zamówienia</a>
+            <a class="book-mark" href="{% url 'Account:order_history' %}">Historia zamówień</a>
+            <a class="book-mark" href="{% url 'Account:observed_books' %}" >Obserwowane produkty</a>
+    </div>
 
-        {{order}}
+    <div class="table-container">
+        {% if orders %}
+        
+                <div class="table-item head">
+                    <p>Cena</p>
+                    <p>Data zamówienia</p>
+                    <p>Status</p>
+                    
+                </div>
+            {% for order in orders %}
+        
+                <div class="table-item expandable">
+                    <p>123.00PLN</p>
+                    <p>{{order.creation_date}}</p>
+                    {% if order.paid %}
+                        <p>Zapłacono</p>
+                    {% else %}
+                        <p>Do zapłaty</p>
+                    {% endif %}
+                </div>
 
-    {% endfor %}
+                <div class="order-detail hidden">
+                    <div class="order-info">
+                        <p>Dane:</p>
+                        <p>{{order.email}}</p>
+                        <p>{{order.first_name}} {{order.last_name}}</p>
+                        <p>{{order.street}} {{order.house_number}}</p>
+                        <p>{{order.zip_code}} {{order.city}}</p>
+                        <p>{{order.voivodeship}}</p>
+                        <p>{{order.additional_info}}</p>
+                    </div>
+
+                    {% for item in order.items.all %}
+                    <div class="item-detail">
+                        <img class="cover-photo" src="{{  item.book.cover_photo.url }}">    
+                        <p>{{item.book.title }}</p>
+                        <p>
+                            {% for author in item.book.authors.all %}
+                                {{ author }}
+                            {% endfor %}
+                        </p>
+                        <p>{{item.book_type}}</p>
+                        <p>{{item.price}}PLN</p>
+                        <p>{{item.quantity}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+        
+            {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<p>Jeszcze nie złożyłeś żandych zamówień.</p>
+
+{% endif %}
 
 {% endblock body %}
 
 
 {% block javascript %}
+<script type="text/javascript" src="{% static 'Account/js/expandOrder.js' %}" > </script> 
 {% endblock javascript %}

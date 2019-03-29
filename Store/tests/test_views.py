@@ -35,7 +35,30 @@ class CreateOrderViewTest(TestCase):
                     password="TestPassword12"
                     )
 
+        self.data_of_existing_user = {
+            "email": "test@test.pl",
+            "first_name": "test",
+            "last_name": "test",
+            "house_number": "123",
+            "street": "123",
+            "city": "Poznan",
+            "zip_code": "61-288",
+            "voivodeship": "wielkopolska",
+            "additional_info": "test info"
+        }
 
+        self.data_of_anon_user ={
+            "email": "unique@test.test",
+            "first_name": "test",
+            "last_name": "test",
+            "house_number": "123",
+            "street": "123",
+            "city": "Poznan",
+            "zip_code": "61-288",
+            "voivodeship": "wielkopolska",
+            "additional_info": "test info"
+        }
+        
 
     def test_logged_user_get(self):
         self.client.login(email='test_user@email.email', password='TestPassword12')
@@ -53,24 +76,42 @@ class CreateOrderViewTest(TestCase):
         self.assertEqual(response.context['order_form'].initial['first_name'], "test_user_first_name")
         self.assertEqual(response.context['order_form'].initial['email'], "test_user@email.email")
         self.assertEqual(response.context['order_form'].initial['street'], None)
+
+
+    def test_post_with_no_data_for_logged_user(self):
+        self.client.force_login(self.test_user)
+        
+        self.assertEqual(len(Order.objects.all()), 1)
+        response = self.client.post(reverse('Store:create_order'), )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(Order.objects.all()), 1)
+
+        
+    def test_order_creation_looged_user(self):
+        self.client.force_login(self.test_user)
+        
+        self.assertEqual(len(Order.objects.all()), 1)
+        response = self.client.post(reverse('Store:create_order'), self.data_of_existing_user )
+        self.assertRedirects(response, reverse('Store:order_confirmation'))
+        self.assertEqual(len(Order.objects.all()), 2)
+        self.assertEqual(self.test_user.orders.all()[0], Order.objects.all()[1])
         
 
-
+        
     def test_anon_user_get(self):
         self.client = Client()
-        response = self.client.get(reverse("Store:create_order"))
+        response = self.client.get(reverse("Store:create_order"), )
 
         self.assertEqual(response.status_code, 200)
         
 
-    def test_anon_user_post(self):
+    def test_anon_user_post_with_no_data(self):
         self.client = Client()
         response = self.client.post(reverse("Store:create_order"))
 
         self.assertEqual(response.status_code, 200)
         self.assertFormError(response, 'order_form', 'house_number', 'This field is required.')
         self.assertFormError(response, 'order_form', 'email', 'This field is required.')
-
 
 
     def test_uses_correct_template(self):
@@ -80,8 +121,6 @@ class CreateOrderViewTest(TestCase):
         self.assertTemplateUsed(response, 'Store/create_order.html')
          
     
-
-
 class ChooseAccountMethodVeiwTest(TestCase):
 
     def setUp(self):

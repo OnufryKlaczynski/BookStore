@@ -1,0 +1,61 @@
+.table-container > .table-item:nth-child(odd){
+    background-color: rgba(233, 233, 233, 0.63);
+}
+.table-container > div:first-child{
+    border: 1px solid rgba(0, 0, 0, 0.212);
+}
+.table-container > *{
+    z-index: 20;
+    position: relative;
+}
+
+
+
+.table-item{
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    border: 1px solid rgba(0, 0, 0, 0.212);
+    border-top:none;
+    padding: 20px;
+    background-color: #fff;
+    cursor: pointer;
+    
+}
+
+
+
+.hidden{
+    transition: max-height 0.8s;
+    max-height: 0%;
+    overflow: hidden;
+    border-bottom: none;
+    
+
+}
+.expanded{
+    max-height: 100%;
+    transition: max-height 0.8s;
+    
+    border-bottom: 1px solid rgba(0, 0, 0, 0.212);
+    
+}
+
+
+
+.order-info{
+    padding: 20px;
+}
+
+.item-detail{
+    display:grid;
+    padding: 20px;
+    grid-template-columns: 150px 220px repeat(4, 150px);
+    grid-column-gap: 10px;
+    align-items: center;
+}
+
+
+.cover-photo{
+    width: 100px;
+    height: 140px;
+}
