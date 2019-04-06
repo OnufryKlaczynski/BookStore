@@ -10,7 +10,7 @@
     background-color: #fff;
     display: grid;
     grid-template-columns: 100px 200px 1fr 200px 200px;
-    grid-template-areas: "cover info . quantity price";
+    grid-template-areas: "cover info . quantity price total-price total-price-currency.";
     align-items: center;
     margin-bottom: 2px;
     padding: 20px 20px;
@@ -26,6 +26,9 @@
     grid-area: info;
 }
 
+.quantity-change{
+    grid-area: quantity;
+}
 .quantity{
     grid-area: quantity;
 }
@@ -34,7 +37,21 @@
     grid-area: price;
 }
 
+.total-price{
+    grid-area: total-price;
+}
+.total-price-currency{
+    grid-area: total-price-currency;
+}
 
 .cart-summary{
     background-color: #fff;
+}
+
+#remove-icon, #add-icon{
+    cursor: pointer;
+    user-select: none; 
+    -ms-user-select: none;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
 }

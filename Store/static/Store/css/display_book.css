@@ -21,6 +21,7 @@
 }
 
 .book-preview{
+    
     display: grid;
     padding: 20px;
     margin: 2px;
@@ -73,8 +74,9 @@
 
 
 .title{
-    font-size:1.4em;
-    color: rgba(0,0,0,.86)
+    font-size:1.2em;
+    
+    color: rgba(0,0,0,.86);
 
 }
 .author{

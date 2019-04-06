@@ -2,7 +2,6 @@
 
 {% block css %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_cart.css' %}">
 {% endblock css %}
 
@@ -17,6 +16,21 @@
         <div class="cart-container">
 
             <div class="items">
+                <div class="cart-item-preview">
+                        <span></span>
+                        <div class="book-info">
+                            <p>Tytuł</p>
+                            <p>Autorzy</p>
+                            <p>Rodzaj</p>
+                        </div>
+                        
+                        
+                        <span class="quantity">Ilość</span>
+                        
+                        <span class="price">Cena pojedynczacd</span>
+                        <span class="total-price">Cena łaczna</span>
+                    
+                </div>
                 {% for item in cart %}
                     <div class="cart-item-preview">
                         <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
@@ -26,11 +40,24 @@
                                 {{ author.first_name}}
                                 {% endfor %}
                             </p>
-                            <p>{{ item.book.book_type }}</p>
+                            <p>{{ item.book_type }}</p>
                         </div>
+                        <div
+                            class="data-element quantity-change"
+                            data-book-id="{{item.book.id}}" 
+                            data-book-type="{{item.book_type}}"
+                            data-book-price="{{item.book_type.price}}">
+                           
+                            <i id="remove-icon" class="small material-icons">remove</i>
+                            <span class="quantity-value">{{ item.quantity }}</span>
+                            
+                            <i id="add-icon" class="small material-icons" >add</i>
+                        </div>
+                        <span class="price">{{ item.book_type.price }}PLN</span>
+                        {% load multiply_tag %}
+                        <div class="total-price">{% multiply item.book_type.float_price item.quantity %}</div>
+                        <div class="total-price-currency">PLN</div>
                         
-                            <span class="quantity">{{ item.quantity }}</span>
-                            <span class="price">{{ item.book_type.price }}</span>
                        
                     </div>
                  {% endfor %}
@@ -54,3 +81,9 @@
 {% endif %}
 
 {% endblock body %}
+
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'Store/js/addToCart.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/displayCart.js' %}" > </script> 
+{% endblock %}

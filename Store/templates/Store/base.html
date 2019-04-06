@@ -4,6 +4,7 @@
     
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'Store/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}">
     
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,38 +14,7 @@
 </head>
 
 <body>
-<header>
-    <h1 id="logo"><a href="{% url 'Store:index' %}">MojeLogo</a></h1>
-    <form id="search">
-        <input id="search-input" 
-            type="text" 
-            placeholder="Czego szukasz?" 
-            onfocus="changeSearchFormColorOnFocus();" 
-            onblur="changeSearchFormColorOnBlur();"
-        >
-        <button type="submit">
-            <i class="material-icons">search</i>
-        </button>
-    </form>
-    <a id="favourites" href=""><i class="material-icons">star_border</i></a>
-    <a id="settings" href="{% url 'Account:account_options' %}"><i class="material-icons">settings</i></a>
-    <a href="{% url 'Store:display_cart' %}">
-        <div id="cart">
-            {% if cart%}
-                
-                <span>
-                    <i class="material-icons">shopping_cart</i>
-                    <span id="cart-quantity-wrapper"><span id="cart-quantity"> {{ cart.quantity }}</span></span>
-                </span>
-                
-                <span id="cart-price"> {{ cart.price }}PLN </span>
-            {% else %}
-                <span> Brak przedmiotów </span>
-            {% endif %}
-        <div>
-    </a>
-
-</header>
+{% include "global_header.html" %}
 
 <main>
 
@@ -53,9 +23,9 @@
     {% endblock  %}
     
 </main>
-
+{% include "global_footer.html" %}
     
-<script type="text/javascript" src="{% static 'Store/js/search.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'js/search.js' %}" > </script> 
  {% block javascript %}
  {% endblock %}
 </body>

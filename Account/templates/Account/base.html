@@ -4,18 +4,15 @@
    
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'Store/css/base.css' %}"> 
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
     {% block css %}
     {% endblock %}
 </head>
 
 <body>
-<header>
-    <h1><a href="{% url 'Store:index' %}">Book Store</a></h1> 
-    
-
-</header>
-
+{% include "global_header.html" %}
 <main>
 
     

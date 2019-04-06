@@ -7,10 +7,12 @@
                     <img class="cover-image" src="{{ book.cover_photo.url }}" alt="{{ book.title }}"/>
                 </a>
 
+                {% with book_type=book.first_available_type %}
+
                 <a class="addToCart-button" href="#" onclick="addToCart(event);"
                     data-book-id="{{book.id}}" 
-                    data-book-type="paper_book"
-                    data-book-price="{{book.paper_book.price}}">
+                    data-book-type="{{book_type}}"
+                    data-book-price="{{book_type.price}}">
                     <i id="add-cart-icon" class="material-icons">add_shopping_cart</i>Dodaj do wózka
                 </a>
 
@@ -22,9 +24,12 @@
                 {% endfor %}
                 
                 <div>
-                    <p class="book-type">Książka | {{ book.paper_book.cover }}</p>
-                    <p class="price">{{ book.paper_book.price }} PLN</p>
-                </div> 
+                    
+                    <p class="book-type">{{ book_type }}</p>
+                    <p class="price">{{ book_type.price }} PLN</p>
+                </div>
+
+                {% endwith %}
             </div>
             
         {% endfor %}

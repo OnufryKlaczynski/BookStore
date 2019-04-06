@@ -24,7 +24,7 @@
         </div>
         <div class="shop-info">
             {% if book.ebook %}
-            <div class="ebook"  onclick="chooseType(event);">
+            <div class="ebook choosable"  onclick="chooseType(event);">
                 <div data-book-id="{{book.id}}" 
                     data-book-type="ebook"
                     data-book-price="{{book.ebook.price}}">
@@ -38,7 +38,7 @@
             </div>
             {% endif %}
             {% if book.audio_book%}
-            <div class="audio-book"  onclick="chooseType(event);">
+            <div class="audio-book choosable"  onclick="chooseType(event);">
                 <div data-book-id="{{book.id}}" 
                     data-book-type="audio_book"
                     data-book-price="{{book.audio_book.price}}">
@@ -52,7 +52,7 @@
             </div>
             {% endif %}
             {% if book.paper_book %}
-            <div id="choosen" class="paper-book" onclick="chooseType(event);" >
+            <div class="paper-book choosable" onclick="chooseType(event);" >
                 <div data-book-id="{{book.id}}" 
                     data-book-type="paper_book"
                     data-book-price="{{book.paper_book.price}}">
@@ -73,13 +73,13 @@
                 <div id="swapable">
 
                         <div>
-                            {% if book.paper_book %}
+                            {% with book_type=book.first_available_type %}
                             <div class="book-type">
-                                okładka {{book.paper_book.cover }}
+                                okładka {{book_type}}
                             </div>
                         
-                            <p class="price">{{book.paper_book.price }} PLN</p>
-                            {% endif %}
+                            <p class="price">{{book_type.price}} PLN</p>
+                            {% endwith %}
                         </div>
                 </div>
                 <i id="remove-icon" class="small material-icons" onclick="changeQuantityValue(-1)">remove</i>

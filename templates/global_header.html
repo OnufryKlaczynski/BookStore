@@ -1,0 +1,32 @@
+<header>
+    <h1 id="logo"><a href="{% url 'Store:index' %}">MojeLogo</a></h1>
+    <form id="search">
+        <input id="search-input" 
+            type="text" 
+            placeholder="Czego szukasz?" 
+            onfocus="changeSearchFormColorOnFocus();" 
+            onblur="changeSearchFormColorOnBlur();"
+        >
+        <button type="submit">
+            <i class="material-icons">search</i>
+        </button>
+    </form>
+    <a id="favourites" href=""><i class="material-icons">star_border</i></a>
+    <a id="settings" href="{% url 'Account:account_options' %}"><i class="material-icons">settings</i></a>
+    <a href="{% url 'Store:display_cart' %}">
+        <div id="cart">
+            {% if global_cart %}
+                
+                <span>
+                    <i class="material-icons">shopping_cart</i>
+                    <span id="cart-quantity-wrapper"><span id="cart-quantity"> {{ global_cart.quantity }}</span></span>
+                </span>
+                
+                <span id="cart-price"> {{ global_cart.price }}PLN </span>
+            {% else %}
+                <span> Brak przedmiotów </span>
+            {% endif %}
+        <div>
+    </a>
+
+</header>
