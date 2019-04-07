@@ -11,24 +11,22 @@
    
 }
 
-
-
-
-
 .register-button, .without-account-button{
     display: block;
+    margin: 30px auto;
     width: 200px;
-    margin-bottom: 20px;
+    
     background-color:  rgba(10, 228, 126, 0.657);
     border-radius: 6px;
     padding: 12px 12px;
     color: rgba(255, 255, 255, 0.9);    
     font-weight: 600;
-    
+    text-align: center;
 
 }
 .register-button:hover, .without-account-button:hover{ 
     background-color: rgba(10, 228, 126, 0.925);
+    
 }
 
 .header-like{
@@ -37,7 +35,7 @@
     text-align: center;
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(0,0,0, .5);
-    margin-bottom: 8px; 
+    margin-bottom: 18px; 
 
 }
 
@@ -52,4 +50,14 @@
     background-color: #fff;
     height:200px;
 
+}
+
+.smaller-faded{
+    font-size: 0.95em;
+    color: rgba(0, 0, 0, 0.712);
+}
+
+#lost-password{
+    margin-top: 10px;
+    text-align: end;
 }

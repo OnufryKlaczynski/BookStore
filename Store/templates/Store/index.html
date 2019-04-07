@@ -11,6 +11,7 @@
 
     <div class="index-main-container">
         <div class="categories">
+            <div class="categories-title">Kategorie:</div>
             {% for category in categories %}
                 <a class="category-link" href="{% url 'Store:categories' category.id %}">{{ category|capfirst}}</a>
             {% endfor %}

@@ -1,7 +1,7 @@
 .cart-container{
     display: grid;
     grid-template-columns: 3fr 1fr;
-    
+    grid-column-gap: 20px;
 }
 
 
@@ -9,11 +9,12 @@
     
     background-color: #fff;
     display: grid;
-    grid-template-columns: 100px 200px 1fr 200px 200px;
-    grid-template-areas: "cover info . quantity price";
+    grid-template-columns: 1fr 1fr  1fr 1fr 1fr ;
+    grid-template-areas: "cover info  quantity price total-price";
+    grid-column-gap: 5px;
     align-items: center;
-    margin-bottom: 2px;
-    padding: 20px 20px;
+    padding: 10px 10px 10px 20px;
+    margin-bottom: 20px;
 }
 
 .cover-image-cart{
@@ -26,6 +27,9 @@
     grid-area: info;
 }
 
+.quantity-change{
+    grid-area: quantity;
+}
 .quantity{
     grid-area: quantity;
 }
@@ -34,7 +38,60 @@
     grid-area: price;
 }
 
+.total-price{
+    grid-area: total-price;
+}
+.total-price-currency{
+    grid-area: total-price-currency;
+}
 
 .cart-summary{
     background-color: #fff;
+    height: 180px;
+    padding: 20px 30px 0px 30px;
+    line-height: 24px;
+}
+
+button#go-to-payment{
+
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    width: 160px;
+    border: 1px solid rgba(44, 44, 44, 0.733);
+    border-radius: 6px;
+}
+
+#remove-icon, #add-icon{
+    cursor: pointer;
+    user-select: none; 
+    -ms-user-select: none;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
+}
+
+.pre-cart{
+    display: inline-block;
+    padding: 0px 40px 2px 2px;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(68, 68, 68, 0.164);
+    margin-bottom: 15px;
+}
+
+.author{
+    font-size: 0.9em;
+    color: rgba(44, 44, 44, 0.733);
+}
+.title{
+    
+}
+.book-format{
+    font-size: 0.9em;
+    color: rgba(44, 44, 44, 0.733);
+}
+.less-important{
+    font-size: 0.9em;
+    color: rgba(44, 44, 44, 0.733);
 }

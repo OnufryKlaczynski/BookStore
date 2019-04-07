@@ -7,98 +7,111 @@
 
 
 {% block body %}
-    <div class="book-container">
-        <img class="book-cover" src="{{book.cover_photo.url }}"/>
-        
-        <div class="book-info">
-            <h1 class="title">{{book.title }}</h1>
-            {% for author in book.authors.all %}
-                <a href="{% url 'Store:author_detail' author.id %} " class="author">{{ author }}</a>
-            {% endfor %}
-            <a href="{% url 'Store:categories' book.category.id %}" class="category">{{book.category}}</a>
-            <div class="tags">
-                {% for tag in book.tags.all %}
-                    <a class="tag" href="{% url 'Store:tags' %}?tag={{tag.text}}">#{{tag}}</a>
+    <div class="layout">
+        <div class="book-container">
+            <img class="book-cover" src="{{book.cover_photo.url }}"/>
+            
+            <div class="book-info">
+                <h1 class="title">{{book.title }}<i id="add-to-favourites" class="material-icons" data-book-id="{{book.id}}" onclick="addToObserved(event)">star_border </i> 
+                </h1>
+                
+                <span class="pre">Autor:</span>
+                {% for author in book.authors.all %}
+                    <a href="{% url 'Store:author_detail' author.id %} " class="author">{{ author }}</a>
                 {% endfor %}
+                
+                <a href="{% url 'Store:categories' book.category.id %}" class="category">{{book.category}}</a>
             </div>
-        </div>
-        <div class="shop-info">
-            {% if book.ebook %}
-            <div class="ebook"  onclick="chooseType(event);">
-                <div data-book-id="{{book.id}}" 
-                    data-book-type="ebook"
-                    data-book-price="{{book.ebook.price}}">
-                    <p class="book-type">
-                        ebook
-                    </p>
-                    <p class="price">
-                        {{ book.ebook.price}}   PLN
-                    </p>
+            <div class="shop-info">
+                <div class="segment-title">Dostępne formaty:</div>
+                {% if book.ebook %}
+                <div class="ebook choosable"  onclick="chooseType(event);">
+                    <div data-book-id="{{book.id}}" 
+                        data-book-type="ebook"
+                        data-book-price="{{book.ebook.price}}">
+                        <p class="book-type">
+                            ebook
+                        </p>
+                        <p class="price">
+                            {{ book.ebook.price}}   PLN
+                        </p>
+                    </div>
                 </div>
-            </div>
-            {% endif %}
-            {% if book.audio_book%}
-            <div class="audio-book"  onclick="chooseType(event);">
-                <div data-book-id="{{book.id}}" 
-                    data-book-type="audio_book"
-                    data-book-price="{{book.audio_book.price}}">
-                    <p class="book-type">
-                        audiobook
-                    </p>
-                    <p class="price">
-                        {{ book.audio_book.price}} PLN
-                    </p> 
-                </div>   
-            </div>
-            {% endif %}
-            {% if book.paper_book %}
-            <div id="choosen" class="paper-book" onclick="chooseType(event);" >
-                <div data-book-id="{{book.id}}" 
-                    data-book-type="paper_book"
-                    data-book-price="{{book.paper_book.price}}">
-                    <p class="book-type">
-                        okładka {{book.paper_book.cover }}
-                    </p>
-                    <p class="price">
-                        {{book.paper_book.price }} PLN
-                    </p>
+                {% endif %}
+                {% if book.audio_book%}
+                <div class="audio-book choosable"  onclick="chooseType(event);">
+                    <div data-book-id="{{book.id}}" 
+                        data-book-type="audio_book"
+                        data-book-price="{{book.audio_book.price}}">
+                        <p class="book-type">
+                            audiobook
+                        </p>
+                        <p class="price">
+                            {{ book.audio_book.price}} PLN
+                        </p> 
+                    </div>   
                 </div>
+                {% endif %}
+                {% if book.paper_book %}
+                <div class="paper-book choosable" onclick="chooseType(event);" >
+                    <div data-book-id="{{book.id}}" 
+                        data-book-type="paper_book"
+                        data-book-price="{{book.paper_book.price}}">
+                        <p class="book-type">
+                            {{book.paper_book.cover }}
+                        </p>
+                        <p class="price">
+                            {{book.paper_book.price }} PLN
+                        </p>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
+            <div class="tags">
+                <div class="segment-title">Tagi:</div>
+                    {% for tag in book.tags.all %}
+                        <a class="tag" href="{% url 'Store:tags' %}?tag={{tag.text}}">#{{tag}}</a>
+                    {% endfor %}
+            </div>
+            
+            
+            <div class="book-description">
+                <div class="segment-title">Opis: </div>
+                {{book.description}}
+            </div>
+    
         </div>
 
         <div class="price-info">
-            
-            <div class="">
-                <div id="swapable">
-
-                        <div>
-                            {% if book.paper_book %}
-                            <div class="book-type">
-                                okładka {{book.paper_book.cover }}
+                <div class="">
+                    
+                    <div id="swapable">
+    
+                            <div>
+                                {% with book_type=book.first_available_type %}
+                                <div class="book-type">
+                                    <span class="pre">Format: </span>{{book_type}}
+                                </div>
+                            
+                                <p class="price"><span class="pre">Cena: </span>{{book_type.price}} PLN</p>
+                                {% endwith %}
                             </div>
-                        
-                            <p class="price">{{book.paper_book.price }} PLN</p>
-                            {% endif %}
-                        </div>
+                    </div>
+                    <span class="pre">Ilość:</span>
+                    <i id="remove-icon" class="small material-icons" onclick="changeQuantityValue(-1)">remove</i>
+                    <input id="quantity" type="text" value="1" /> 
+                    <i id="add-icon" class="small material-icons" onclick="changeQuantityValue(1)">add</i>
+                    <a id="add-to-cart"
+                        href="#"
+                        onclick="addToCartFromInput(event)"
+                        data-book-id="{{book.id}}" 
+                        data-book-type="paper_book"
+                        data-book-price="{{book.paper_book.price}}">
+                        <i id="add-cart-icon" class="material-icons">add_shopping_cart</i>Dodaj do wózka
+                    </a>
                 </div>
-                <i id="remove-icon" class="small material-icons" onclick="changeQuantityValue(-1)">remove</i>
-                <input id="quantity" type="text" value="1" /> 
-                <i id="add-icon" class="small material-icons" onclick="changeQuantityValue(1)">add</i>
-                <a id="add-to-cart"
-                    href="#"
-                    onclick="addToCartFromInput(event)"
-                    data-book-id="{{book.id}}" 
-                    data-book-type="paper_book"
-                    data-book-price="{{book.paper_book.price}}">
-                    <i id="add-cart-icon" class="material-icons">add_shopping_cart</i>Dodaj do wózka
-                </a>
+                
             </div>
-            
-        </div>
-
-        <div class="book-description">{{book.description}}</div>
-
     </div>
     
     <div id="other-books-segment">
@@ -119,7 +132,10 @@
 
 
 {% block javascript %}
+
 <script type="text/javascript" src="{% static 'Store/js/quantityForm.js' %}" > </script> 
 <script type="text/javascript" src="{% static 'Store/js/addToCart.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/addToObserved.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'Store/js/getCookie.js' %}" > </script> 
 
 {% endblock javascript %}

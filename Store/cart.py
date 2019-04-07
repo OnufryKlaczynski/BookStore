@@ -20,39 +20,32 @@ class Cart:
         self.cart = self.session.get(CART, None)
     
 
-    def add_item(self, book_id:id, book_type:str, price:Decimal):
+    def add_item(self, book_id, book_type, price, quantity=1):
+        book_id = str(book_id)
+        price = str(price)
+        quantity = int(quantity)
         
+        if(quantity == 0):
+            return
+
         if not self.cart.get(book_id, None):
             self.cart[book_id] = {}
     
         if not self.cart[book_id].get(book_type, None):
             self.cart[book_id][book_type] = {'price' : price, 'quantity': 0}
 
-        self.cart[book_id][book_type]['quantity'] += 1
-
+        if(self.cart[book_id][book_type]['quantity'] + quantity < 0):
+            raise ValueError
+            
+        self.cart[book_id][book_type]['quantity'] += quantity
+        
         self.save()
 
 
-    def get_total_price_and_quantity(self):
-        """Calculates sum of items without asking database about updates in prices."""
-        sum = 0 
-        quantity = 0
-        for book_id in self.cart.keys():
-            for book_type in self.cart[book_id].keys():
-
-                book = self.cart[book_id][book_type]
-                sum += Decimal(book['price']) * int(book['quantity'])
-                quantity += int(book['quantity'])
-
-        return str(sum), quantity
     
 
-    def recalculates_prices(self):
-        """Asks database for the updated in prices."""
-        pass
-
-
     def __iter__(self):
+        """Iterate through cart returning dict with actual database items not stored in cart properties."""
         books = Book.objects.filter(id__in = self.cart.keys())
         for i, book_id in enumerate(self.cart.keys()):
             for book_type in self.cart[book_id].keys():
@@ -63,6 +56,7 @@ class Cart:
 
 
     def create_order_items(self, order):
+        """Create order model from items stored in cart, asks databaste for anychange in price"""
         order_items = []
         for book_id in self.cart.keys():
             for book_type in self.cart[book_id].keys():
@@ -82,3 +76,34 @@ class Cart:
     def save(self):
         self.session.modified = True
 
+
+
+    def get_total_price_and_quantity(self):
+        """Calculates sum of items without asking database about updates in prices."""
+        sum = 0 
+        quantity = 0
+        for book_id in self.cart.keys():
+            for book_type in self.cart[book_id].keys():
+
+                book = self.cart[book_id][book_type]
+                sum += Decimal(book['price']) * int(book['quantity'])
+                quantity += int(book['quantity'])
+
+        return str(sum), quantity
+    
+
+    def clean_cart(self):
+        """Removes items where quantity is 0"""
+        cart = {}
+        for book_id in self.cart.keys():
+            for book_type in self.cart[book_id].keys():
+                book = self.cart[book_id][book_type]
+                quantity = book['quantity']
+                if quantity != 0:
+                    if not cart.get(book_id):
+                        cart[book_id] = {}
+                    cart[book_id][book_type] = self.cart[book_id][book_type]
+
+        self.cart = cart
+        self.save()
+        

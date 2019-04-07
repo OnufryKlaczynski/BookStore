@@ -21,6 +21,7 @@
 }
 
 .book-preview{
+    
     display: grid;
     padding: 20px;
     margin: 2px;
@@ -28,13 +29,17 @@
     background-color: #fff;
 }
 .book-preview:hover{
-    height: 380px;
+    min-height: 380px;
+    max-height: 400px;
     z-index: 40;
     
 
     -webkit-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
     -moz-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
     box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
+}
+.book-preview:hover .title{
+    white-space: normal;
 }
 
 .book-preview:hover .addToCart-button{
@@ -73,8 +78,12 @@
 
 
 .title{
-    font-size:1.4em;
-    color: rgba(0,0,0,.86)
+    font-size:1.1em;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgba(0,0,0,.86);
 
 }
 .author{

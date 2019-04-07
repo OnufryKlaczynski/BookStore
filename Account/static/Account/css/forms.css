@@ -1,23 +1,17 @@
 
-form{
-    margin: 0 auto;
-   
+form.order-data-form{
+    padding: 20px 20px;    
+    background-color: #fff;
 }
 
-label{
+form.order-data-form label{
     display: block;
     margin-bottom: 2px;
 
 }
-
-form{
-    margin: 0 auto;
-    padding: 20px 20px;
-    width: 400px;
-    background-color: #fff;
-}
-
-input[type=text], input[type=password], input[type=email]{
+form.order-data-form input[type=text], 
+form.order-data-form input[type=password], 
+form.order-data-form input[type=email]{
     display: block;
     padding: 8px;
     border: 1px solid rgba(0,0,0,.0975);
@@ -25,7 +19,17 @@ input[type=text], input[type=password], input[type=email]{
     margin-bottom: 16px; 
 }
 
-label{
+form.login-form input[type=text], 
+form.login-form input[type=password], 
+form.login-form input[type=email]{
+    display: block;
+    padding: 8px;
+    border: 1px solid rgba(0,0,0,.0975);
+    border-radius: 3px;
+    margin-bottom: 16px; 
+}
+
+ label{
     margin-bottom: 4px;
     display: block;
     font-size: 80%;

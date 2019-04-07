@@ -1,0 +1,22 @@
+{% extends "Account/base.html" %}
+
+{% block css %}
+{% load static%}
+{% endblock css%}
+
+
+{% block body %}
+
+    {% for book in observed %}
+        <p>{{ book.title }}</p>
+    {% endfor %}
+
+
+{% endblock body %}
+
+
+{% block javascript %}
+
+<script type="text/javascript" src="{% static 'Store/js/getCookie.js' %}" > </script> 
+
+{% endblock javascript %}

@@ -71,12 +71,13 @@ class DisplayCart(View):
 
     def get(self, request):
         cart = Cart(request.session)
-        
+        cart.clean_cart()
         return render(request, 'Store/display_cart.html', {'cart':cart})
+
 
     def post(self, request):
         cart = Cart(request.session)
-        
+        cart.clean_cart()
         return redirect('Store:choose_account_method')
 
 
@@ -85,23 +86,34 @@ class DisplayCart(View):
 def add_to_cart(request):
     
     data = json.loads(request.body)
-    
-    print(data)
-    book_id = data['id']
-    book_type = data['type']
-    book = get_object_or_404(Book, pk=book_id)
-
     try:
-        price = getattr(book, book_type).price
-    except AttributeError:
-        return JsonResponse({"status":"error"})
-
-    if(book):
+        book_id, book_type, price, quantity = unpack_data(data)
         cart = Cart(request.session)
-        cart.add_item(book_id, book_type, str(price))
+        try:
+            cart.add_item(book_id, book_type, price, quantity)
+        except ValueError:
+            return JsonResponse({"status": "error", "error_msg":"quantity of item can not be less than 0"})
+        
         return JsonResponse({"status": "ok"})
 
-    return JsonResponse({"status":"error"})
+    except (ValueError, TypeError):
+        return JsonResponse({"status":"error", "error_msg":"invalid data type"})
+    except Book.DoesNotExist:
+        return JsonResponse({"status":"error", "error_msg":"object does not exist"})
+    except AttributeError:
+        return JsonResponse({"status":"error", "error_msg":"invalid book type"})
+    
+    return JsonResponse({"status":"error", "error_msg": "unknown error"})
+
+
+def unpack_data(data):
+    
+    book_id = int(data['id'])
+    book = Book.objects.get(pk=book_id)
+    book_type = data['type']
+    price = getattr(book, book_type).price
+    quantity = data['quantity']
+    return book_id, book_type, price, quantity
 
 
 class CategoriesIndex(View):

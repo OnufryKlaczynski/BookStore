@@ -17,6 +17,7 @@ class SignUp(View):
         form = SignUpForm()
         return render(request, 'Account/sign_up.html', {'form':form})
 
+
     def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -35,7 +36,6 @@ class SignUp(View):
 
 
 class AccountOptions(LoginRequiredMixin,View):
-    
     
     def get(self, request):
         user = request.user
@@ -79,13 +79,13 @@ class ObservedBooks(LoginRequiredMixin, View):
 
 
     def post(self, request, pk):
-
         user = request.user
         book = get_object_or_404(Book, pk=pk)
         user.observed.add(book)
 
         return JsonResponse({"status":"ok"})
 
+    
     def delete(self, request, pk):
         user = request.user
         book = get_object_or_404(Book, pk=pk)

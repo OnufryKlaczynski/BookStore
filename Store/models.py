@@ -29,13 +29,39 @@ class Book(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    
+    @property
+    def first_available_type(self):
+        if self.paper_book:
+            return self.paper_book 
+
+        elif self.ebook:
+            return self.ebook
+
+        elif self.audio_book:
+            return self.audio_book
+            
+        return None
+
 
 class Series(models.Model):
     title = models.CharField(max_length=40)
-    
-    
-class PaperBook(models.Model):
+
+
+class GenericBookType(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10)
+
+    @property
+    def float_price(self):
+        return float(self.price)
+
+
+    class Meta:
+        abstract = True
+
+    
+class PaperBook(GenericBookType):
+    
     
     cover_type = (
         ("HARD", "Hard"),
@@ -43,9 +69,13 @@ class PaperBook(models.Model):
         )
     cover = models.CharField(choices=cover_type, max_length=4)
 
+    def __str__(sefl):
+        return "paper_book"
 
-class EBook(models.Model):
-    price = models.DecimalField(decimal_places=2, max_digits=10)
+
+
+class EBook(GenericBookType):
+    
     formats = (
         ("PDB", "pdb"),
         ("EPUB", "epub"),
@@ -55,11 +85,16 @@ class EBook(models.Model):
         ) 
     aveiable_format = models.CharField(choices=formats, max_length=6)
 
+    def __str__(self):
+        return "ebook"
 
-class AudioBook(models.Model):
-    price = models.DecimalField(decimal_places=2, max_digits=10)
+
+class AudioBook(GenericBookType):
+    
     reader = models.ManyToManyField("Reader", )
     
+    def __str__(self):
+        return "audio_book"
 
 
 class Person(models.Model):

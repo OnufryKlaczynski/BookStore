@@ -2,6 +2,7 @@ from django.test import TestCase, RequestFactory, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+import json
 
 from Store.models import Order, Book, EBook, AudioBook, PaperBook, Author
 from Store.forms import OrderForm
@@ -114,15 +115,6 @@ class CreateOrderViewTest(TestCase):
         self.assertFormError(response, 'order_form', 'email', 'This field is required.')
 
 
-    def test_anon_user_post_with_data(self):
-        self.client = Client()
-        self.assertEqual(len(Order.objects.all()), 1)
-        response = self.client.post(reverse("Store:create_order"), self.data_of_anon_user)
-
-        self.assertRedirects(response, reverse("Store:order_confirmation"))
-        self.assertEqual(len(Order.objects.all()), 2)
-
-
     def test_uses_correct_template(self):
         response = self.client.get(reverse('Store:create_order'))
         
@@ -161,4 +153,149 @@ class ChooseAccountMethodVeiwTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'Store/choose_account_method.html')
          
+
+class AddToCartViewTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        paper_book = PaperBook.objects.create(price=13.22)
+        audio_book = AudioBook.objects.create(price=13.22)
+        ebook = EBook.objects.create(price=13.22)
+        Book.objects.create(
+            title="Dziady",
+            paper_book=paper_book,
+            audio_book=audio_book,
+            ebook=ebook
+            )
+
+    def setUp(self):
+        self.valid_data = json.dumps({
+            "id" : 1,
+            "type": "paper_book",
+            "quantity" : 1,
+        
+        })
+        self.valid_data2 = json.dumps({
+            "id" : 1,
+            "type": "audio_book",
+            "quantity" : 1,
+        
+        })
+        self.valid_data3 = json.dumps({
+            "id" : 1,
+            "type": "ebook",
+            "quantity" : 1,
+        
+        })
+
+        self.invalid_id  = json.dumps({
+            "id" : 123,
+            "type": "ebook",
+            "quantity" : 1,
+        
+        })
+        self.invalid_id2  = json.dumps({
+            "id" : -12,
+            "type": "ebook",
+            "quantity" : 1,
+        
+        })
+        self.invalid_id3  = json.dumps({
+            "id" : "",
+            "type": "ebook",
+            "quantity" : 1,
+        
+        })
+        self.invalid_type  = json.dumps({
+            "id" : 1,
+            "type": "e_book",
+            "quantity" : 1,
+        
+        })
+        self.invalid_type2  = json.dumps({
+            "id" : 1,
+            "type": "",
+            "quantity" : 1,
+        
+        })
+        self.empty_data = json.dumps({
+            "id":"",
+            "type":"",
+            "quantity" : 1,
+        })
+
+        self.empty_data2 = json.dumps({
+            "id":None,
+            "type":None,
+            "quantity" : 1,
+        })
+
+        self.invalid_quantity = json.dumps({
+            "id":None,
+            "type":None,
+            "quantity" : None,
+        })
+
+    def test_response_for_valid_data(self):
+        session = self.client.session
+        cart= Cart(session).cart
+        self.assertEqual(cart, {})
+        
+        response = self.client.post(reverse("Store:add_to_cart"), self.valid_data, content_type="application/json")
+        session = self.client.session
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "ok")
     
+        cart = Cart(session).cart
+        
+        self.assertEqual(cart, {"1":{"paper_book": {"quantity":1, "price":"13.22"}}})
+        
+
+
+    def test_response_for_invalid_id(self):
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_id, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "object does not exist")
+        
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_id2, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "object does not exist")
+        
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_id3, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid data type")
+    
+    
+    def test_response_for_invalid_book_type(self):
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_type, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid book type")
+        
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_type2, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid book type")
+    
+
+    def test_response_for_empty_data(self):
+        response = self.client.post(reverse("Store:add_to_cart"), self.empty_data, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid data type")
+        
+        response = self.client.post(reverse("Store:add_to_cart"), self.empty_data2, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid data type")
+
+        response = self.client.post(reverse("Store:add_to_cart"), self.invalid_quantity, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['status'], "error")
+        self.assertEqual(json.loads(response.content)['error_msg'], "invalid data type")
+        
+

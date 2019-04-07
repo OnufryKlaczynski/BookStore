@@ -1,7 +1,32 @@
+{% extends "Account/base.html" %}
+
+{% block css %}
+{% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'Account/css/forms.css' %}"> 
+<link rel="stylesheet" type="text/css" href="{% static 'Account/css/order_data.css' %}"> 
+{% endblock css%}
 
 
-<form action="{% url 'Account:account_options' %}" method="post">
-    {% csrf_token %}
-    {{ order_data_form }}
-    <input type="submit" value="Zapisz">
-</form>
+{% block body %}
+<div class="profile-container"> 
+
+    <div class="bookmark-container">
+        <a class="book-mark active" href="{% url 'Account:account_options' %}">Dane do zamówienia</a>
+        <a class="book-mark" href="{% url 'Account:order_history' %}">Historia zamówień</a>
+        <a class="book-mark" href="{% url 'Account:observed_books' %}" >Obserwowane produkty</a>
+    </div>
+
+
+
+
+    <form class="order-data-form" action="{% url 'Account:account_options' %}" method="post">
+        {% csrf_token %}
+        {{ order_data_form }}
+        <input type="submit" value="Zapisz">
+    </form>
+</div>
+{% endblock body %}
+
+
+{% block javascript %}
+{% endblock javascript %}
