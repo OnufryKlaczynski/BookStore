@@ -1,17 +1,29 @@
+.layout{
+    display: grid;
+    grid-template-columns: 1fr 240px;
+    grid-column-gap: 15px;
+}
+
 .book-container{
     display: grid;
     background-color: #fff; 
-    grid-template-columns: 300px 300px 1fr 200px;
+    grid-template-columns: 300px 300px 1fr;
     
     grid-template-areas: 
-        "cover info type add"
-        "desc desc desc .";
+        "cover info info"
+        "cover type type"
+        "cover tags tags"
+        "desc desc desc";
     grid-row-gap: 10px;
     
     padding: 30px;
 
 }
+#add-to-favourites{
+    position: relative;
+    top: 5px;
 
+}
 .book-cover{
     grid-area: cover;
     width: 150;
@@ -25,15 +37,14 @@
 
 .shop-info{
     grid-area: type;
-    align-self: end;
-    justify-self: right;
-    width: 120px;
-    
+    margin-bottom: 10px;
 }
+
 
 
 .book-description{
     grid-area: desc;
+    line-height: 1.4;
 }
 
 .other-cover{
@@ -41,14 +52,33 @@
     height: 140px;
 }
 
-.price-info{
-    grid-area: add;
+
+
+.tags{
+    grid-area: tags;
+    margin-bottom: 10px;
+}
+
+.segment-title{
+ font-size: 1.1em;
+}
+.segment-title::after{
+    content: "";
+    width: 100%;
+    height: 1px;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.295);
+    margin-bottom: 10px;
+    margin-top: 3px;
 }
 
 .tag{
     color: rgba(0, 0, 0, 0.76);
     background-color: rgba(0, 0, 0, 0.096);
     padding: 1px 3px 2px 3px;
+    display: inline-block;
+    margin-top: 0.3em;
+    margin-right: 0.1em;
 }
 
 #remove-icon, #add-icon {
@@ -67,34 +97,31 @@
     width: 30px;
     text-align: center;
 }
-#add-to-cart{
-    display: block;
-}
 
-
-#add-cart-icon{
-    position: relative;
-    top: 4px;
-}
 
 .title{
     font-size: 1.2em;
     margin-bottom: 0.3em;
 }
-.author{
-    margin-bottom: 0.25em;
+.pre{
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.411);
+}
 
+.author{
+    margin-bottom: 4px;
+    display: inline-block;
+}
+.category::before{
+    content: "Kategoria: ";
+    font-size: 0.9em;
+    color: rgba(0, 0, 0, 0.411);
 }
 .category{
     display: block;
     font-size: 0.9em;
     color: rgba(0, 0, 0, 0.76);
     margin-bottom: 0.2em;
-}
-.tag{
-    display: inline-block;
-    margin-top: 0.3em;
-    margin-right: 0.1em;
 }
 
 .ebook p{
@@ -109,14 +136,15 @@
     display: block;
 }
 
-.ebook, .audio-book, .paper-book{
+.choosable{
+    display: inline-block;
     border: 1px solid rgba(0, 0, 0, 0.46);
     border-radius: 5px;
     padding: 8px 4px;
     margin: 4px;
     text-align: center;
     cursor: pointer;
-    width: 100%;
+    width: 160px;
     box-sizing: border-box;
 }
 
@@ -147,4 +175,32 @@
     width: 180px;
     height: 200px;
     vertical-align: top;
+}
+
+.price-info{
+    background: #fff;
+    width: 80%;
+    justify-self: center;
+    padding: 20px;
+}
+
+.price-info div.book-type, p.price{
+    margin-bottom: 5px;
+}
+
+#add-to-cart{
+    margin-top: 12px;
+    display: block;
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    text-align: center;
+    height: 30px;
+}
+
+
+#add-cart-icon{
+    position: relative;
+    top: 4px;
+    right: 2px;
 }

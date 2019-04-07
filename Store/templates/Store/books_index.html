@@ -17,7 +17,7 @@
                 </a>
 
 
-                <a href="{% url 'Store:book_detail' book.id book.slug %}"><h1 class="title">{{ book.title }}</h1></a>
+                <a class="title" href="{% url 'Store:book_detail' book.id book.slug %}">{{ book.title }}</a>
                 {% for author in book.authors.all %}
         
                     <a class="author" href="{% url 'Store:author_detail' author.pk  %}" >{{ author }}</a>

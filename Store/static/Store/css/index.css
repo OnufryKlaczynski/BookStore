@@ -10,10 +10,17 @@
     display: block;
     font-size: 1.1em;
     padding: 2px;
-    color: rgba(0, 87, 200, 0.87);
+    margin-bottom: 8px;
+    color: rgba(27, 27, 27, 0.747);
 }
 
 .category-link:hover{
-    color: rgba(0, 87, 200, 0.616);
+    color: rgb(56, 52, 52);
     
+}
+.categories-title{
+    color: rgb(56, 52, 52);
+    font-size: 1.1em;
+    padding: 2px;
+    margin-bottom: 12px;
 }

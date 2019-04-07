@@ -19,6 +19,7 @@ html, body{
 
     background-color: #fafafa;
 }
+
 a{
     text-decoration: none;
     color: rgb(77, 76, 76);
@@ -61,8 +62,31 @@ main{
     background-color: #fafafa;
 }
 
+html{
+    height:100%;
 
+}
+body{
+    min-height:100%; 
+    position:relative;
+    padding-bottom: 100px;
+}
 footer{ 
-    height: 180px;
-    background-color: rgba(0, 0, 0, 0.801)
+    height: 100px;
+    padding-top: 8px;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.801);
+    position:absolute;
+    bottom:0;
+    width: 100%;
+    margin-top: 40px;
+}
+
+
+#add-to-favourites{
+    cursor: pointer;
+    user-select: none; 
+    -ms-user-select: none;
+    -moz-user-select: none; 
+    -webkit-user-select: none;
 }
