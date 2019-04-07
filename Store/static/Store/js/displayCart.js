@@ -18,6 +18,9 @@ function changeValue(event){
         return;
     }
     quantityElement.innerText = quantity + parseInt(quantityElement.innerText);
+    const quantityElement2 = document.querySelector(".quantity-second");
+    console.log(quantityElement2.innerText)
+    quantityElement2.innerText = quantity + parseInt(quantityElement2.innerText);
 
     const dataElement = elementClicked.parentElement;
     const bookId = dataElement.getAttribute("data-book-id");

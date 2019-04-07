@@ -3,7 +3,7 @@
 {% block css %}
 
 {% load static%}
-<link rel="stylesheet" type="text/css" href="{% static 'Store/css/forms.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/create_order.css' %}">
 
 {% endblock css%}
 
@@ -12,10 +12,10 @@
 
     <form id="order-form" action="{% url 'Store:create_order' %}" method="post">
         {% csrf_token %}
-        <p id="personal-info">
-            Dane zamawiającego:
-        </p>
+        
         <div class="personal-info">
+            <p id="personal-info">Dane zamawiającego:</p>
+
             {{ order_form.email.label_tag}}
             {{ order_form.email}}
     
@@ -26,8 +26,8 @@
             {{ order_form.last_name}}
         </div>
 
-        <p id="delivery-info">Dane adresowe: </p>
-        <div >
+        <div class="delivery-info">
+            <p id="delivery-info">Dane adresowe: </p>
             {{ order_form.house_number.label_tag}}
             {{ order_form.house_number}}
     

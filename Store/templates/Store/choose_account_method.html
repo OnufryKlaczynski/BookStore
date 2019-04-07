@@ -11,7 +11,7 @@
         <div class="container">
             <div class="method">
                 <form class="login-form" method="post" action="{% url 'login' %}">
-                        <p class="header-like">Logowanie</p>
+                    <p class="header-like">Logowanie</p>
                     {% csrf_token %}
                   
                     <div class="input-field">
@@ -31,19 +31,19 @@
                     <input type="hidden"  name="next" value="{{ next }}" />
                     
                     
-                    <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+                    <p id="lost-password" class="smaller-faded"><a href="{% url 'password_reset' %}">Lost password?</a></p>
                 </form>
                 
                 <div class="register">
                     <p class="header-like">Rejestracja</p>
-                    <p>Nie masz konta? </p>
-                    <a class="register-button" href="{% url 'Account:sign_up' %}">Zarejestruj się</a>  
-                </div>
+                    <p class="smaller-faded ">Nie masz konta? Zarejestruj się!</p>
+                    <a class="register-button" href="{% url 'Account:sign_up' %}">Rejestracja</a>  
+                </div>  
             </div>
         
             <div class="spaceing">
                 <p class="header-like">Kup bez rejestracji</p>
-                <span>Nie masz konta i nie chcesz go zkładać?</span>
+                <p class="smaller-faded" >Nie masz konta i nie chcesz go zkładać?</p>
                 <a class="without-account-button" href="{% url 'Store:create_order' %}">Zapłać bez konta</a>
             
             </div>

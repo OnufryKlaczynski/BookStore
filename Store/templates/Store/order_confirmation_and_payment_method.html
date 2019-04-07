@@ -4,65 +4,82 @@
 {% load static%}
 <link href="https://ssl.dotpay.pl/test_payment/widget/payment_widget.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_cart.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/order_confirmation_and_payment_method.css' %}">
 {% endblock css%}
 
 
 {% block body %}
 
-<script id="dotpay-payment-script" src="https://ssl.dotpay.pl/test_payment/widget/payment_widget.js"></script>
-
-  Akceptuję 
-  <a href="https://ssl.dotpay.pl/files/regulamin_dotpay_sa_doko nywania_wplat_w_serwisie_dotpay.pdf" target="_blank" title="regulamin płatności">
-    Regulamin płatności
-  </a> oraz 
-  <a href="https://www.dotpay.pl/polityka-plikow-cookies/" target="_blank" title="polityka cookies">
-    politykę cookies
-  </a> Dotpay Sp. z o.o..
-
-
-Przyjmuję do wiadomości, że w celu realizacji procesu płatności Administratorem moich danych osobowych jest Dotpay sp. z o.o.. (KRS 0000296790), 30-552 Kraków (Polska), Wielicka 72, +48126882600, <a href="mailto:bok@dotpay.pl">bok@dotpay.pl</a>, zobacz <a title="regulamin" target="_blank" href="https://ssl.dotpay.pl/t2/cloudfs1/magellan_media/rod o">pełną treść klauzuli informacyjnej</a>.
-
-
-<form action="{{ url }}"  method="post">
-  
-  {{ dotpay_form }}
-  <input type="submit" value="Przejdź do płatności"/>
-</form>
-
-<div class="cart-container">
 
     <div class="items">
+        <div class="pre-cart">Twoje przedmioty:</div>
         <div class="cart-item-preview">
-          <span>.</span>
-          <span>Tytuł</span>
-          <span>Typ</span>
-          <span>Ilość</span>
-          <span>Cena</span>
-          <span>Cena całkowita</span>
+          <span></span>
+          <div class="book-info">Ksiażka:</div>
+          <span class="quantity">Ilość:</span>
+          <span class="price">Cena pojedyncza:</span>
+          <span class="total-price">Cena łaczna:</span>    
         </div>
         {% for item in items %}
            <div class="cart-item-preview">
                 <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
                 <div class="book-info">
-                    <p>{{ item.book.title }}</p>
-                    <p> {% for author in item.book.authors.all %}
-                        {{ author.first_name}}
+                    <p class="title">{{ item.book.title }}</p>
+                    <p class="author"> {% for author in item.book.authors.all %}
+                        {{ author}}
                         {% endfor %}
                     </p>
-                  </div>
-                  <p>{{ item.book_type }}</p>
+                    <p class="book-format">{{ item.book_type }}</p>
+                </div>
                 
                     <span class="quantity">{{ item.quantity }}</span>
-                    <span class="price">{{ item.price }}</span>
+                    <span class="price">{{ item.price }}PLN</span>
                     {% load multiply_tag %}
-                    <span class="total-item-price">{%  multiply item.quantity item.price %}</span>
-            </div> 
+                    <div class="total-price">{% multiply item.price item.quantity %}PLN</div>
+        </div> 
          {% endfor %}  
-    </div>
-     
-     
     
-</div>
+  </div>
+
+  <div class="data">
+    <div class="pre-cart">Twoje Dane:</div>
+
+    <p><span class="less-important">Author: </span>{{order.email}}</p>
+    <p><span class="less-important">Imię nazwisko: </span>{{order.first_name}} {{order.last_name}}</p>
+    <p><span class="less-important">Nr. domu: </span>{{order.house_number}}</p>
+    <p><span class="less-important">Ulica: </span>{{order.street}}</p>
+    <p><span class="less-important">Miasto: </span>{{order.city}}</p>
+    <p><span class="less-important">Kod pocztowy: </span>{{order.zip_code}}</p>
+    <p><span class="less-important">Województwo: </span>{{order.voivodeship}}</p>
+    {% if order.additional_info %}
+    <p><span class="less-important">Dodatkowe inofrmacje: </span>{{order.additional_info}}</p>
+    {% endif %}
+  </div>
+  <script id="dotpay-payment-script" src="https://ssl.dotpay.pl/test_payment/widget/payment_widget.js"></script>
+
+  <div class="dot-pay-req">
+    <input class="inline-checkbox" type="checkbox">Akceptuję 
+    <a href="https://ssl.dotpay.pl/files/regulamin_dotpay_sa_doko nywania_wplat_w_serwisie_dotpay.pdf" target="_blank" title="regulamin płatności">
+      Regulamin płatności
+    </a> oraz
+  
+    <a href="https://www.dotpay.pl/polityka-plikow-cookies/" target="_blank" title="polityka cookies">
+      politykę cookies
+    </a> Dotpay Sp. z o.o..
+    Przyjmuję do wiadomości, że w celu realizacji procesu płatności Administratorem moich danych osobowych jest Dotpay sp. z o.o.. (KRS 0000296790), 30-552 Kraków (Polska), Wielicka 72, +48126882600, <a href="mailto:bok@dotpay.pl">bok@dotpay.pl</a>, zobacz <a title="regulamin" target="_blank" href="https://ssl.dotpay.pl/t2/cloudfs1/magellan_media/rod o">pełną treść klauzuli informacyjnej</a>.
+  </div>
+
+
+
+
+  
+<form action="{{ url }}"  method="post">
+  
+    {{ dotpay_form }}
+    <input id="go-to-dotpay" type="submit" value="Przejdź do płatności"/>
+</form>   
+    
+
 
 
 {% endblock body %}

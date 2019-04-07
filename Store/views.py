@@ -71,10 +71,13 @@ class DisplayCart(View):
 
     def get(self, request):
         cart = Cart(request.session)
+        cart.clean_cart()
         return render(request, 'Store/display_cart.html', {'cart':cart})
 
 
     def post(self, request):
+        cart = Cart(request.session)
+        cart.clean_cart()
         return redirect('Store:choose_account_method')
 
 

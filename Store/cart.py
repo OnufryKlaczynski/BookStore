@@ -91,3 +91,19 @@ class Cart:
 
         return str(sum), quantity
     
+
+    def clean_cart(self):
+        """Removes items where quantity is 0"""
+        cart = {}
+        for book_id in self.cart.keys():
+            for book_type in self.cart[book_id].keys():
+                book = self.cart[book_id][book_type]
+                quantity = book['quantity']
+                if quantity != 0:
+                    if not cart.get(book_id):
+                        cart[book_id] = {}
+                    cart[book_id][book_type] = self.cart[book_id][book_type]
+
+        self.cart = cart
+        self.save()
+        

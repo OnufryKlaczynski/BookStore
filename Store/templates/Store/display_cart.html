@@ -60,9 +60,9 @@
              <div class="cart-summary">
                 <p><span class="less-important">Całkowity koszt:</span>
                     {{global_cart.price}}PLN</p>
-                <p>
+                <p >
                     <span class="less-important">Ilość przedmiotów:</span> 
-                    {{global_cart.quantity}}
+                    <span class="quantity-second">{{global_cart.quantity}}</span>
                 </p>
     
                 <form action="{% url 'Store:display_cart' %}" method="post">

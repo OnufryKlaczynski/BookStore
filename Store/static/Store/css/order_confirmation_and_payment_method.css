@@ -1,0 +1,27 @@
+input#go-to-dotpay{
+    padding: 10px;
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 5px;
+    width : 200px;
+    position: relative;
+    right: -80%;
+    
+}
+
+.inline-checkbox{
+    display: inline-block;
+    width: 10px;
+    
+    margin-right: 4px;
+    
+}
+
+.dot-pay-req{
+    margin-top: 16px;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+.data{
+    margin-bottom: 18px;
+}
