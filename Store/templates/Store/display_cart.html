@@ -12,35 +12,28 @@
 
 
 
-        <h1>Mój koszyk</h1>
+        
         <div class="cart-container">
-
+            
             <div class="items">
+                <div class="pre-cart">Mój koszyk:</div>
                 <div class="cart-item-preview">
                         <span></span>
-                        <div class="book-info">
-                            <p>Tytuł</p>
-                            <p>Autorzy</p>
-                            <p>Rodzaj</p>
-                        </div>
-                        
-                        
-                        <span class="quantity">Ilość</span>
-                        
-                        <span class="price">Cena pojedynczacd</span>
-                        <span class="total-price">Cena łaczna</span>
-                    
+                        <div class="book-info">Ksiażka:</div>
+                        <span class="quantity">Ilość:</span>
+                        <span class="price">Cena pojedyncza:</span>
+                        <span class="total-price">Cena łaczna:</span>    
                 </div>
                 {% for item in cart %}
                     <div class="cart-item-preview">
                         <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
                         <div class="book-info">
-                            <p>{{ item.book.title }}</p>
-                            <p> {% for author in item.book.authors.all %}
-                                {{ author.first_name}}
+                            <p class="title">{{ item.book.title }}</p>
+                            <p class="author"> {% for author in item.book.authors.all %}
+                                {{ author}}
                                 {% endfor %}
                             </p>
-                            <p>{{ item.book_type }}</p>
+                            <p class="book-format">{{ item.book_type }}</p>
                         </div>
                         <div
                             class="data-element quantity-change"
@@ -55,8 +48,8 @@
                         </div>
                         <span class="price">{{ item.book_type.price }}PLN</span>
                         {% load multiply_tag %}
-                        <div class="total-price">{% multiply item.book_type.float_price item.quantity %}</div>
-                        <div class="total-price-currency">PLN</div>
+                        <div class="total-price">{% multiply item.book_type.float_price item.quantity %}PLN</div>
+
                         
                        
                     </div>
@@ -65,12 +58,16 @@
              
              
              <div class="cart-summary">
-                <p>Całkowity koszt: {{cart.price}}</p>
-                <p>Ilość przedmiotów: {{cart.quantity}}</p>
+                <p><span class="less-important">Całkowity koszt:</span>
+                    {{global_cart.price}}PLN</p>
+                <p>
+                    <span class="less-important">Ilość przedmiotów:</span> 
+                    {{global_cart.quantity}}
+                </p>
     
                 <form action="{% url 'Store:display_cart' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit">Przejdź dalej</button>
+                    <button id="go-to-payment" type="submit">Zapłać</button>
                 </form>
              </div>
         </div>

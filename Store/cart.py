@@ -42,18 +42,6 @@ class Cart:
         self.save()
 
 
-    def get_total_price_and_quantity(self):
-        """Calculates sum of items without asking database about updates in prices."""
-        sum = 0 
-        quantity = 0
-        for book_id in self.cart.keys():
-            for book_type in self.cart[book_id].keys():
-
-                book = self.cart[book_id][book_type]
-                sum += Decimal(book['price']) * int(book['quantity'])
-                quantity += int(book['quantity'])
-
-        return str(sum), quantity
     
 
     def __iter__(self):
@@ -88,3 +76,18 @@ class Cart:
     def save(self):
         self.session.modified = True
 
+
+
+    def get_total_price_and_quantity(self):
+        """Calculates sum of items without asking database about updates in prices."""
+        sum = 0 
+        quantity = 0
+        for book_id in self.cart.keys():
+            for book_type in self.cart[book_id].keys():
+
+                book = self.cart[book_id][book_type]
+                sum += Decimal(book['price']) * int(book['quantity'])
+                quantity += int(book['quantity'])
+
+        return str(sum), quantity
+    

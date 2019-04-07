@@ -38,7 +38,7 @@ function changeValue(event){
     for(let element of dataElement.parentElement.children){
         if(element.classList.contains("total-price") === true){
             
-            element.innerText = (parseFloat(element.innerText) + (price*quantity)).toFixed(2);
+            element.innerText = (parseFloat(element.innerText) + (price*quantity)).toFixed(2) +"PLN";
         }
     }
 
