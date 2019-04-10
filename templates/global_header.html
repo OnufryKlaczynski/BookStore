@@ -1,13 +1,14 @@
 <header>
     <h1 id="logo"><a href="{% url 'Store:index' %}">MojeLogo</a></h1>
-    <form id="search">
-        <input id="search-input" 
+    <form id="search" name="search" method="get" action="{% url 'Store:search' %}">
+        <input id="search-input id_search" 
             type="text" 
-            placeholder="Czego szukasz?" 
+            placeholder="Czego szukasz?"
+            name="search"
             onfocus="changeSearchFormColorOnFocus();" 
             onblur="changeSearchFormColorOnBlur();"
         >
-        <button type="submit">
+        <button action="{% url 'Store:search' %}" type="submit">
             <i class="material-icons">search</i>
         </button>
     </form>

@@ -29,3 +29,4 @@ class DotPayForm(forms.Form):
     firstname = forms.CharField(widget = forms.HiddenInput())
     lastname = forms.CharField(widget = forms.HiddenInput())
     email = forms.EmailField(widget = forms.HiddenInput())
+

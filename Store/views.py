@@ -34,12 +34,12 @@ class Index(View):
         books_page = paginator.get_page(page)
 
         categories = Category.objects.all()
-        msg = request.GET.get('msg')
+
         return render(request, 'Store/index.html', 
                 {
                 'books': books_page, 
                 'categories':categories,
-                'msg':msg
+                
                 })
 
 
@@ -47,8 +47,14 @@ class BookDetail(View):
     def get(self, request, pk, slug):
         book = get_object_or_404(Book, pk=pk)
         other_books = [other_book for other_book in book.authors.all()[0].books.all() if other_book.pk != book.pk ] 
-        print(other_books)
-        return render(request, 'Store/book_detail.html', {'book':book, 'other_books':other_books})
+        
+        observed_str = ""
+        if request.user.is_authenticated:
+            observed = request.user.observed.filter(pk=book.pk)
+            if len(observed) != 0:
+                observed_str= "observed"
+
+        return render(request, 'Store/book_detail.html', {'book':book, 'other_books':other_books, 'observed':observed_str})
 
 
 
@@ -68,6 +74,30 @@ class AuthorDetail(View):
         books = author.books.all()
         return render(request, 'Store/author_detail.html', {'author': author, 'books':books})
 
+
+class Search(View):
+    # TODO: integrate search with search engine
+    def get(self, request):
+        
+        
+        search = request.GET.get("search")
+        
+        if not search:
+            return redirect(reverse("Store:index"))
+
+        books = Book.objects.filter(title__contains=search)
+        paginator = Paginator(books, 12)
+        page = request.GET.get('page')
+        books_page = paginator.get_page(page)
+        
+        categories = Category.objects.all()
+
+        return render(request, 'Store/index.html', 
+                {
+                'books': books_page, 
+                'categories':categories,
+                
+                })
 
 
 class DisplayCart(View):
@@ -272,3 +302,5 @@ class ChooseAccountMethod(View):
 
     def post(self, request):
         pass
+
+

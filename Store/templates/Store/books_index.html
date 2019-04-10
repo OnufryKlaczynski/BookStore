@@ -1,4 +1,11 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}"> 
+
+
 {% if messages %}
+
+
+
 {% for message in messages %}
     <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
 {% endfor %}

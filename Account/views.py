@@ -75,20 +75,31 @@ class ObservedBooks(LoginRequiredMixin, View):
         user = request.user
         observed = user.observed.all()
 
-        return render(request, 'Account/observed.html', {'observed':observed})
+        return render(request, 'Account/observed.html', {'books':observed})
 
 
     def post(self, request, pk):
         user = request.user
-        book = get_object_or_404(Book, pk=pk)
+        if not user.is_authenticated:
+            return JsonResponse({"error": "You are not logged in."}, status=403)
+        try:
+            book = Book.objects.get(pk=pk)
+        except Book.DeosNotExist:
+            return JsonResponse({"error": "Wrong id"}, status=404)
+        
         user.observed.add(book)
-
         return JsonResponse({"status":"ok"})
 
     
     def delete(self, request, pk):
         user = request.user
+    
+        if not user.is_authenticated:
+            return JsonResponse({"error": "You are not logged in."}, status=403)
+        
         book = get_object_or_404(Book, pk=pk)
         user.observed.remove(book)
         
         return JsonResponse({"status":"ok"})
+
+

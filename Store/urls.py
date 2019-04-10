@@ -11,6 +11,7 @@ urlpatterns = [
     path("books/<int:pk>/<slug:slug>/", views.BookDetail.as_view(), name='book_detail'),
     path("authors/", views.AuthorIndex.as_view(), name='author_index'),
     path("authors/<int:pk>/", views.AuthorDetail.as_view(), name='author_detail'),
+    path("search/", views.Search.as_view(), name='search'),
     path("cart/",views. DisplayCart.as_view(), name='display_cart'),
     path("account-method/", views.ChooseAccountMethod.as_view() , name='choose_account_method'),
     path("create-order/", views.CreateOrder.as_view() , name='create_order'),

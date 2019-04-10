@@ -12,7 +12,7 @@
             <img class="book-cover" src="{{book.cover_photo.url }}"/>
             
             <div class="book-info">
-                <h1 class="title">{{book.title }}<i id="add-to-favourites" class="material-icons" data-book-id="{{book.id}}" onclick="addToObserved(event)">star_border </i> 
+                <h1 class="title">{{book.title }}<i id="add-to-favourites" class="material-icons {{ observed }}" data-book-id="{{book.id}}" onclick="addToObserved(event)">star_border </i> 
                 </h1>
                 
                 <span class="pre">Autor:</span>
@@ -135,7 +135,7 @@
 
 <script type="text/javascript" src="{% static 'Store/js/quantityForm.js' %}" > </script> 
 <script type="text/javascript" src="{% static 'Store/js/addToCart.js' %}" > </script> 
+<script type="text/javascript" src="{% static 'js/getCookie.js' %}" > </script> 
 <script type="text/javascript" src="{% static 'Store/js/addToObserved.js' %}" > </script> 
-<script type="text/javascript" src="{% static 'Store/js/getCookie.js' %}" > </script> 
 
 {% endblock javascript %}
