@@ -67,7 +67,11 @@
     
                 <form action="{% url 'Store:display_cart' %}" method="post">
                     {% csrf_token %}
+                    {% if global_cart.quantity == 0 %}
+                    <button id="go-to-payment" type="submit" disabled>Zapłać</button>
+                    {% else %}
                     <button id="go-to-payment" type="submit">Zapłać</button>
+                    {% endif %}
                 </form>
              </div>
         </div>

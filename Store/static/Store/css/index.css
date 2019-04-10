@@ -24,3 +24,6 @@
     padding: 2px;
     margin-bottom: 12px;
 }
+.activated{
+    color: rgba(10, 228, 126, 0.925);
+}

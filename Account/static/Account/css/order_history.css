@@ -43,19 +43,25 @@
 
 
 .order-info{
-    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.item-detail{
-    display:grid;
-    padding: 20px;
-    grid-template-columns: 150px 220px repeat(4, 150px);
-    grid-column-gap: 10px;
-    align-items: center;
-}
 
 
 .cover-photo{
     width: 100px;
     height: 140px;
+}
+.less-important{
+    font-size: 0.9em;
+    color: rgba(44, 44, 44, 0.733);
+}
+.pre{
+    display: inline-block;
+    font-size: 1.2em;
+    padding-bottom: 2px;
+    padding-right: 40px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid  rgba(44, 44, 44, 0.452);
 }

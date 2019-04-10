@@ -3,11 +3,28 @@
 {% block css %}
 {% load static%}
     <link rel="stylesheet" type="text/css" href="{% static 'Store/css/display_book.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'Store/css/index.css' %}"> 
 {% endblock css%}
 
 
 {% block body %}
-    {% include "Store/books_index.html" %}
+<div class="index-main-container">
+        <div class="categories">
+            <div class="categories-title">Kategorie:</div>
+            {% for iter_category in categories %}
+                {% if category == iter_category %}
+                
+                <a class="category-link activated" href="{% url 'Store:categories' iter_category.id %}">{{ iter_category|capfirst}}</a>
+                {% else %}
+                <a class="category-link " href="{% url 'Store:categories' iter_category.id %}">{{ iter_category|capfirst}}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+        {% include "Store/books_index.html" %}
+    
+       
+    </div>
 
 {% endblock body %}
 

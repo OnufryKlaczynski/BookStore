@@ -1,0 +1,25 @@
+.author-container{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-areas: "photo name"
+        "descr descr";
+    margin-bottom: 20px;
+    grid-row-gap: 20px;
+    
+}
+
+
+.author-image{
+    grid-area: photo;
+
+}
+
+.author-name{
+    grid-area:name;
+    font-size: 1.3em;
+}
+
+
+.author-descr{
+    grid-area: descr;
+}

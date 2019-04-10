@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from functools import reduce
 from decimal import Decimal
@@ -26,17 +27,19 @@ from .forms import OrderForm, DotPayForm
 class Index(View):
     
     def get(self, request):
-        books = Book.objects.all()
+        
+        books = Book.objects.all().order_by('title')
         paginator = Paginator(books, 12)
         page = request.GET.get('page')
         books_page = paginator.get_page(page)
 
         categories = Category.objects.all()
-
+        msg = request.GET.get('msg')
         return render(request, 'Store/index.html', 
                 {
                 'books': books_page, 
                 'categories':categories,
+                'msg':msg
                 })
 
 
@@ -125,7 +128,10 @@ class CategoriesIndex(View):
         paginator = Paginator(books, 12)
         page = request.GET.get('page')
         books_page = paginator.get_page(page)
-        return render(request, 'Store/category_index.html', {'category':category, 'books':books_page})
+
+        categories = Category.objects.all()
+
+        return render(request, 'Store/category_index.html', {'category':category, 'books':books_page, 'categories':categories})
 
 
 class TagsIndex(View):
@@ -177,7 +183,6 @@ class OrderConfirmation(View):
         order_id = request.session.get('order')
         order = Order.objects.get(pk=order_id)
         amount = reduce(lambda value, item:  value+ (Decimal(item.price)*item.quantity), order.items.all(), 0)
-        print(amount)
         currency = "PLN"
         urlc = urllib.parse.urljoin("http://127.0.0.1:8000", reverse('Store:success'))
         url = ''
@@ -221,11 +226,12 @@ class DidSucces(View):
     def get(self, request):
         status_choices = ("new", "completed", "rejected")
         did_succes = request.GET.get("status")
-
-        return HttpResponse("Ok")
+        messages.success(request, 'Dziękujemy za zakupy!')
+        return redirect(reverse("Store:index"))
 
 
 def dotpay_server_confirmation(request):
+    #TODO dokończyć
     request.GET.get('id')
     request.GET.get('operation_number')
     request.GET.get('operation_type')

@@ -95,3 +95,11 @@ button#go-to-payment{
     font-size: 0.9em;
     color: rgba(44, 44, 44, 0.733);
 }
+
+button#go-to-payment:disabled,
+button#go-to-payment[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}

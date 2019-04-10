@@ -2,16 +2,27 @@
 
 {% block css %}
 {% load static%}
+<link rel="stylesheet" type="text/css" href="{% static 'Account/css/order_data.css' %}"> 
 {% endblock css%}
 
 
 {% block body %}
+<div class="profile-container">
+    
+        <div class="bookmark-container">
+                <a class="book-mark" href="{% url 'Account:account_options' %}">Dane do zamówienia</a>
+                <a class="book-mark" href="{% url 'Account:order_history' %}">Historia zamówień</a>
+                <a class="book-mark active" href="{% url 'Account:observed_books' %}" >Obserwowane produkty</a>
+        </div>
+        <div>
+        {% if books %}
+                {% include "Store/books_index.html" %}
+        {% else %}
+                <p>Nie obserwujesz żadnych przedmiotów.</p>
+        {% endif %}
+        </div>
 
-    {% for book in observed %}
-        <p>{{ book.title }}</p>
-    {% endfor %}
-
-
+</div>
 {% endblock body %}
 
 
