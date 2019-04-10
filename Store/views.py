@@ -20,8 +20,8 @@ import urllib
 from .models import Book, Author, Reader, Category, Tag, Order
 from .cart import CART, Cart
 from .forms import OrderForm, DotPayForm
-
-
+from .tasks import send_confirmation_order_mail
+from . import config
 
 
 class Index(View):
@@ -184,14 +184,14 @@ class OrderConfirmation(View):
         order = Order.objects.get(pk=order_id)
         amount = reduce(lambda value, item:  value+ (Decimal(item.price)*item.quantity), order.items.all(), 0)
         currency = "PLN"
-        urlc = urllib.parse.urljoin("http://127.0.0.1:8000", reverse('Store:success'))
-        url = ''
+        url = urllib.parse.urljoin("http://127.0.0.1:8000", reverse('Store:success'))
+        urlc = urllib.parse.urljoin("http://127.0.0.1:8000", reverse('Store:dot_pay_return_values'))
         firstname = order.first_name
         lastname = order.last_name
         email = order.email
         data_for_dot_pay = {
-            'api_version':'dev',
-            'id':790190,
+            'api_version':config.DOTPAY_API_VERSION,
+            'id':config.DOTPAY_ID,
             'amount': amount,
             'currency': currency,
             'description' : f"Zamówienie dla {firstname} {lastname} na kwote {amount}",
@@ -199,7 +199,7 @@ class OrderConfirmation(View):
             'lastname':lastname,
             'email':email,
             'type': 4,
-            'URL': urlc,
+            'URL': url,
             'URLC': urlc,
             'bylaw':1 ,
             'personal_data': 1,
@@ -227,11 +227,19 @@ class DidSucces(View):
         status_choices = ("new", "completed", "rejected")
         did_succes = request.GET.get("status")
         messages.success(request, 'Dziękujemy za zakupy!')
+
+        email = "onufryklaczynski@gmail.com"
+        subject = "Zlecenie potwierdzone"
+        body = "Twoje zlecenie zostało potwierdzone. Dziękujemy za zakupy!"
+
+        send_confirmation_order_mail.delay(email, subject, body)
+
+
         return redirect(reverse("Store:index"))
 
 
 def dotpay_server_confirmation(request):
-    #TODO dokończyć
+    #TODO dokończyć potwierdzenie
     request.GET.get('id')
     request.GET.get('operation_number')
     request.GET.get('operation_type')

@@ -17,6 +17,7 @@ urlpatterns = [
     path("order-confirmation/", views.OrderConfirmation.as_view() , name='order_confirmation'),
     path("categories/<int:pk>/", views.CategoriesIndex.as_view() , name='categories'),
     path("success/", views.DidSucces.as_view() , name='success'),
+    path("dot_pay_return_values/", views.DidSucces.as_view() , name='dot_pay_return_values'),
     path("tags", views.TagsIndex.as_view() , name='tags'),
     path("add_to_cart/", views.add_to_cart , name='add_to_cart'),
 

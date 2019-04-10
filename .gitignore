@@ -93,3 +93,6 @@ db.sqlite3
 # fixtrue
 fixtures/
 Books/
+
+# configs an private keys
+config.py
