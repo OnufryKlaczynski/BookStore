@@ -258,13 +258,6 @@ class DidSucces(View):
         did_succes = request.GET.get("status")
         messages.success(request, 'Dziękujemy za zakupy!')
 
-        email = "onufryklaczynski@gmail.com"
-        subject = "Zlecenie potwierdzone"
-        body = "Twoje zlecenie zostało potwierdzone. Dziękujemy za zakupy!"
-
-        send_confirmation_order_mail.delay(email, subject, body)
-
-
         return redirect(reverse("Store:index"))
 
 
@@ -283,8 +276,16 @@ def dotpay_server_confirmation(request):
     request.GET.get('operation_related_number')
     request.GET.get('control')
     request.GET.get('description')
-    request.GET.get('email')
+    email = request.GET.get('email')
     request.GET.get('control')
+
+     
+    subject = "Zlecenie potwierdzone"
+    body = "Twoje zlecenie zostało potwierdzone. Dziękujemy za zakupy!"
+
+    send_confirmation_order_mail.delay(email, subject, body)
+
+
 
     return HttpResponse("OK")
 
