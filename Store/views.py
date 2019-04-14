@@ -197,6 +197,7 @@ class CreateOrder(View):
                 order.user = request.user
             order.save()
             cart = Cart(request.session)
+            cart.clean_cart()
             items = cart.create_order_items(order)
             order.items.set(items)
             order.save() #TODO: Is it necessary, check
