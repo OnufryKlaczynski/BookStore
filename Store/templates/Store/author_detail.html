@@ -18,17 +18,39 @@
         </div>
     </div>
 
+    <p id="other-books-header">Książki tego autora:</p>
     <div class="other-books-segment">
-        <p id="other-books-header">Książki tego autora:</p>
-        {% for book in books %}
-            
-            <a class="other-book" href="{% url 'Store:book_detail' book.id book.slug %}">
-                <img class="other-cover" src="{{book.cover_photo.url }}"/>
-                <p> {{book.title}} </p>
-                <p> {{book.first_available_type.price }}PLN</p>
-            </a>
-            
-        {% endfor %}
+        {% if books.count > 5    %}
+        <i class="material-icons arrows right">arrow_forward_ios</i>
+        <div class="other-books centered" data-gap="{{books.count}}">    
+            {% for book in books %}
+                
+                <a class="other-book" href="{% url 'Store:book_detail' book.id book.slug %}">
+                    <img class="other-cover" src="{{book.cover_photo.url }}"/>
+                    <p> {{book.title}} </p>
+                    <p> {{book.first_available_type.price }}PLN</p>
+                </a>
+                {% endfor %}
+        </div>
+        <i class="material-icons arrows left">arrow_back_ios</i>
+        {% else %}
+        <div class="other-books" >    
+                {% for book in books %}
+                    
+                    <a class="other-book " href="{% url 'Store:book_detail' book.id book.slug %}">
+                        <img class="other-cover" src="{{book.cover_photo.url }}"/>
+                        <p> {{book.title}} </p>
+                        <p> {{book.first_available_type.price }}PLN</p>
+                    </a>
+                    {% endfor %}
+        </div>
+        {% endif %}
     </div>
 
 {% endblock body %}
+
+{% block javascript %}
+{% if books.count > 5 %}
+    <script type="text/javascript" src="{% static 'Store/js/gallery.js' %}" > </script> 
+{% endif %}
+{% endblock %}

@@ -1,14 +1,23 @@
+@media(max-width:850px){
+    .container{
+        display: grid;
+        grid-template-columns: 500px;
+        grid-column-gap: 30px;
+        justify-content: center;
+    }
 
-.container{
-    display: grid;
-    grid-template-columns: 400px 400px;
-    grid-column-gap: 30px;
-    justify-content: center;
+    .spaceing{
+        grid-row-start: 1;
+    }
+
 }
-
-.method{
-    
-   
+@media(min-width:850px){
+    .container{
+        display: grid;
+        grid-template-columns: 400px 400px;
+        grid-column-gap: 30px;
+        justify-content: center;
+    }
 }
 
 .register-button, .without-account-button{

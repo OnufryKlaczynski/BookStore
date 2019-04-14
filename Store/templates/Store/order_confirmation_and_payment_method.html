@@ -13,7 +13,7 @@
 
     <div class="items">
         <div class="pre-cart">Twoje przedmioty:</div>
-        <div class="cart-item-preview">
+        <div class="cart-item-preview label">
           <span></span>
           <div class="book-info">Ksiażka:</div>
           <span class="quantity">Ilość:</span>
@@ -24,18 +24,18 @@
            <div class="cart-item-preview">
                 <img class="cover-image-cart" src="{{ item.book.cover_photo.url }}"></i>
                 <div class="book-info">
-                    <p class="title">{{ item.book.title }}</p>
-                    <p class="author"> {% for author in item.book.authors.all %}
+                    <p class="title"><span class="pre-type">Tytuł:</span>{{ item.book.title }}</p>
+                    <p class="author"> <span class="pre-type">Autor:</span>{% for author in item.book.authors.all %}
                         {{ author}}
                         {% endfor %}
                     </p>
-                    <p class="book-format">{{ item.book_type }}</p>
+                    <p class="book-format"><span class="pre-type">Format:</span>{{ item.book_type }}</p>
                 </div>
                 
-                    <span class="quantity">{{ item.quantity }}</span>
-                    <span class="price">{{ item.price }}PLN</span>
+                    <span class="quantity"><span class="pre-type">Ilość:</span>{{ item.quantity }}</span>
+                    <span class="price"><span class="pre-type">Cena pojedyncza:</span>{{ item.price }}PLN</span>
                     {% load multiply_tag %}
-                    <div class="total-price">{% multiply item.price item.quantity %}PLN</div>
+                    <div class="total-price"><span class="pre-type">Cena łączna:</span>{% multiply item.price item.quantity %}PLN</div>
         </div> 
          {% endfor %}  
     
@@ -62,7 +62,7 @@
 
 
   
-<form action="{{ url }}"  method="post">
+<form class="dotpay-form" action="{{ url }}"  method="post">
     <script id="dotpay-payment-script" src="https://ssl.dotpay.pl/test_payment/widget/payment_widget.js"></script>
     <div class="dot-pay-req">
         <input class="inline-checkbox" type="checkbox">Akceptuję 
@@ -78,7 +78,7 @@
     {{ dotpay_form }}
     <input id="go-to-dotpay" type="submit" value="Przejdź do płatności"/>
 </form>   
-    
+<div class="clear-float"></div>
 
 
 

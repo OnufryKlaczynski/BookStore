@@ -7,7 +7,7 @@
 
 {% block body %}
 
-    <form class="form" action="{% url 'Account:sign_up' %}" method="post">
+    <form class="login-form" action="{% url 'Account:sign_up' %}" method="post">
         {% csrf_token %}
 
         {{form.email.label_tag}}
@@ -20,7 +20,7 @@
         {{ form.password2.label_tag }}
         {{ form.password2 }}
 
-        <input type="submit" value="Sign Up">
+        <input type="submit" value="Rejestracja">
     </form>
 
 

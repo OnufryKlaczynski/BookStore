@@ -34,11 +34,10 @@ function postDataToCartView(data){
 
 
 function updateCartDisplay(price, quantity){
-    console.log(price, quantity);
     const priceElement = document.querySelector('#cart-price');
     const quantityElement = document.querySelector('#cart-quantity');
 
-    priceElement.textContent = (parseFloat(priceElement.textContent) + parseFloat(price)).toFixed(2) + "PLN";
+    priceElement.textContent = (parseFloat(priceElement.textContent) + parseFloat(price*quantity)).toFixed(2) + "PLN";
     quantityElement.textContent = parseInt(quantityElement.textContent) + quantity;
 
 }

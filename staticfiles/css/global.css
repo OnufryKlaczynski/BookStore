@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -42,19 +41,140 @@ a:active{
 
 }
 
-header{
-    margin-top: 0;
-    position: sticky;
-    z-index: 30;
-    top: 0px;
-    background-color: #fff; 
-    border-bottom: 1px solid rgb(0,0,0,.0975);
-    height: 60px;
-    display: grid;
-    grid-template-columns: 1fr 300px 500px 1fr repeat(3, 50px) 1fr;
-    grid-template-areas: ". logo search . fav set cart cart .";
-    align-items: center;
-}   
+@media(max-width:1200px){
+    header{
+        padding: 10px;
+        margin-top: 0;
+        position: relative;
+        z-index: 30;
+        top: 0px;
+        background-color: #fff; 
+        border-bottom: 1px solid rgb(0,0,0,.0975);
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-areas: 
+            "menu logo"
+            "search search"
+            "fav fav"
+            "set set"
+            "cart cart";
+        grid-row-gap: 4px;
+        align-items: center;
+    } 
+
+    #menu{
+        
+        grid-area: menu;
+    }
+    #search{
+        display: none;
+    }
+
+    #favourites, #settings, #cart{
+        display: none;
+        justify-self: center;
+    }
+
+    #logo{
+        text-align: right;
+    }
+}
+
+@media(min-width:1200px){
+
+    header{
+        margin-top: 0;
+        position: sticky;
+        z-index: 30;
+        top: 0px;
+        background-color: #fff; 
+        border-bottom: 1px solid rgb(0,0,0,.0975);
+        height: 60px;
+        display: grid;
+        grid-template-columns: 1fr 300px 500px 1fr repeat(3, 50px) 1fr;
+        grid-template-areas: ". logo search . fav set cart cart .";
+        align-items: center;
+    }   
+
+    #menu{
+        display: none;
+    }
+}
+
+#logo{
+    font-size: 160%;
+    grid-area: logo;
+}
+
+form#search{
+    grid-area: search;
+    border: 1px solid rgba(0, 0, 0, 0.178);
+    border-radius: 4px;
+    background-color:#fafafa;
+    color: rgba(0, 0, 0, 0.397);
+    padding: 4px;
+}
+
+input#search-input{
+    width: 91%;
+    height: 100%;
+    position: relative;
+    top: 3px; 
+}
+button[type=submit]{
+    
+    position: relative;
+    float: right;
+    top: 3px;
+    color: rgba(0, 0, 0, 0.63);
+    
+}
+button[type=submit]:hover{
+    color: rgba(0, 0, 0, 0.925);
+    cursor: pointer;
+}
+
+#favourites{
+    grid-area: fav;
+}
+#settings{
+    grid-area: set;
+}
+#cart{
+    grid-area: cart;
+}
+
+
+#cart-quantity-wrapper {
+    position: relative;
+    left: -14px;
+    display:inline-block;
+    line-height:0px;    
+    
+    border-radius:50%;
+    border:2px solid;
+    font-size:12px;
+    border-color:#0000009b;
+    background-color:#0000009b;
+    color: #fafafa;
+}
+
+#cart-quantity-wrapper span {
+    display:inline-block;
+    
+    padding-top:50%;
+    padding-bottom:50%;
+    
+    margin-left:4px;
+    margin-right:4px;
+}
+#cart-price{
+    position: relative;
+    left: -8px;
+    font-size: 90%;
+}
+
+
 
 main{
     display: block;
@@ -81,6 +201,8 @@ footer{
     bottom:0;
     width: 100%;
     margin-top: 40px;
+    
+
 }
 
 
@@ -90,4 +212,15 @@ footer{
     -ms-user-select: none;
     -moz-user-select: none; 
     -webkit-user-select: none;
+}
+
+.clear-float{
+    clear: both;
+}
+
+.pre-header{
+    position: relative;
+    font-size: 0.9em;
+    top: -7px;
+    
 }

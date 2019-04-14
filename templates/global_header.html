@@ -1,7 +1,10 @@
+
 <header>
+    <i id="menu" class="material-icons">menu</i>
+                
     <h1 id="logo"><a href="{% url 'Store:index' %}">MojeLogo</a></h1>
     <form id="search" name="search" method="get" action="{% url 'Store:search' %}">
-        <input id="search-input id_search" 
+        <input id="search-input" 
             type="text" 
             placeholder="Czego szukasz?"
             name="search"
@@ -12,8 +15,15 @@
             <i class="material-icons">search</i>
         </button>
     </form>
-    <a id="favourites"  href="{% url 'Account:observed_books' %}"><i class="material-icons">star_border</i></a>
-    <a id="settings" href="{% url 'Account:account_options' %}"><i class="material-icons">settings</i></a>
+    {% if user.is_authenticated %}
+
+    <a id="favourites"  href="{% url 'Account:observed_books' %}"><span class="pre-header">Obserwowane</span><i class="material-icons">star_border</i></a>
+    <a id="settings" href="{% url 'Account:account_options' %}"><span class="pre-header">Konto</span><i class="material-icons">account_circle</i></a>
+    {% else %}
+        <a id="favourites" href="{% url 'Account:sign_up' %}">Zarejestruj się</a>
+        <a id="settings" href="{% url 'login' %}">Zaloguj się</a>
+
+    {% endif %}
     <a href="{% url 'Store:display_cart' %}">
         <div id="cart">
             {% if global_cart %}
@@ -31,3 +41,5 @@
     </a>
 
 </header>
+{% load static %}
+<script type="text/javascript" src="{% static 'js/dropdownMenu.js' %}" > </script> 

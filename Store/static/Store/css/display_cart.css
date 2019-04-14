@@ -1,20 +1,64 @@
-.cart-container{
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-column-gap: 20px;
+@media(max-width: 1200px){
+    .cart-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-column-gap: 20px;
+    }
+}
+@media(min-width: 1200px){
+    
+    .cart-container{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-column-gap: 20px;
+    }  
 }
 
+@media(max-width:800px){
+    .cart-item-preview{
+        
+        background-color: #fff;
+        display: grid;
+        grid-template-columns: 1fr 1fr  ;
+        grid-template-areas: 
+            "cover info" 
+            "quantity quantity"
+            "price price"
+            "total-price total-price";
+        grid-column-gap: 5px;
+        align-items: center;
+        padding: 10px 10px 10px 20px;
+        margin-bottom: 20px;
+    }
 
-.cart-item-preview{
+    .label{
+        display: none;
+    }
+
+    .pre-type{
+        font-size:0.9em;
+    }
+
     
-    background-color: #fff;
-    display: grid;
-    grid-template-columns: 1fr 1fr  1fr 1fr 1fr ;
-    grid-template-areas: "cover info  quantity price total-price";
-    grid-column-gap: 5px;
-    align-items: center;
-    padding: 10px 10px 10px 20px;
-    margin-bottom: 20px;
+}
+
+@media(min-width:800px){
+    
+    .cart-item-preview{
+        
+        background-color: #fff;
+        display: grid;
+        grid-template-columns: 1fr 1fr  1fr 1fr 1fr ;
+        grid-template-areas: "cover info  quantity price total-price";
+        grid-column-gap: 5px;
+        align-items: center;
+        padding: 10px 10px 10px 20px;
+        margin-bottom: 20px;
+    }
+
+    .pre-type{
+        display: none;
+    }
 }
 
 .cover-image-cart{

@@ -1,8 +1,8 @@
 
 form#order-form{
-    margin: 0 auto;
-    padding: 20px 20px;
-    width: 600px;
+    margin: 40px auto;
+    
+    max-width: 600px;
 }
 
 form#order-form input[type=text], input[type=password], input[type=email]{
@@ -23,14 +23,14 @@ form#order-form label{
 
 form#order-form input[type=submit]{
     display: block;
-    margin: 0 auto;
     background-color:  rgba(10, 228, 126, 0.657);
     border-radius: 6px;
-    padding: 12px 12px;
+    padding: 12px 20px;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
+    float: right;
+    margin-bottom: 20px;
     
-
 }
 form#order-form input[type=submit]:hover{
     background-color: rgba(10, 228, 126, 0.925);

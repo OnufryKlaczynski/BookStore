@@ -1,10 +1,20 @@
+@media(max-width: 1200px){
+    .data{
+        padding: 10px;
+    }
+    
+    .dot-pay-req{
+        padding: 10px;
+    }
+}
+
+
 input#go-to-dotpay{
     padding: 10px;
     border: 1px solid rgba(0,0,0,0.6);
     border-radius: 5px;
     width : 200px;
-    position: relative;
-    right: -80%;
+    float: right;
     
 }
 
@@ -25,3 +35,4 @@ input#go-to-dotpay{
 .data{
     margin-bottom: 18px;
 }
+

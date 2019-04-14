@@ -19,7 +19,6 @@ function changeValue(event){
     }
     quantityElement.innerText = quantity + parseInt(quantityElement.innerText);
     const quantityElement2 = document.querySelector(".quantity-second");
-    console.log(quantityElement2.innerText)
     quantityElement2.innerText = quantity + parseInt(quantityElement2.innerText);
 
     const dataElement = elementClicked.parentElement;
@@ -38,12 +37,14 @@ function changeValue(event){
 
     // update total-price element
     // TODO: move it to its own function
-    for(let element of dataElement.parentElement.children){
-        if(element.classList.contains("total-price") === true){
-            
-            element.innerText = (parseFloat(element.innerText) + (price*quantity)).toFixed(2) +"PLN";
-        }
+    let totalPriceTextElements = document.querySelectorAll(".total-price-text");
+    for(let element of totalPriceTextElements){
+       
+        element.innerText = (parseFloat(element.innerText) + (price*quantity)).toFixed(2) +"PLN";
+
     }
+
+
 
 }
 

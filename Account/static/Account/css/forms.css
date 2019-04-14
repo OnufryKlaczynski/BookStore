@@ -60,19 +60,27 @@ input[type=submit]:hover{
 
 .login-form{
     margin: 0 auto;
-    width: 600px;
+    max-width: 600px;
     padding: 20px;
 }
 
 .login-form input{
+    box-sizing: border-box;
     width: 100%;
 }
 
-input[type=submit]{
+.login-form input[type=submit]{
     display: block;
-    width: 40%;
+    width: 200px;
     float: right;
-    position: relative;
-    right: -20px;
+    cursor: pointer;
+}
+
+@media(max-width:600px){
+    #lost-password{
+        clear: both;
+        padding-top: 20px;
+        float: right;
+    }   
 }
 

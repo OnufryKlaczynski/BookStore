@@ -1,24 +1,90 @@
+@media(max-width: 550px){
+    .index-main-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-column-gap: 20px;
+        grid-template-areas:
+                "categories" 
+                "books";
+    }
+}
 
-.index-main-container{
-    display: grid;
-    grid-template-columns: 270px 1fr;
-    grid-column-gap: 20px;
-    grid-template-areas: "categories books"
+@media(min-width: 1200px){
+    .index-main-container{
+        display: grid;
+        grid-template-columns: 270px 1fr;
+        grid-column-gap: 20px;
+        grid-template-areas: "categories books"
+    }
 }
 
 .categories{
     grid-area: categories;
 }
 
-.book-preview-containter{
-    
-    grid-area: books;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(4, 370px);
-    grid-column-gap: 6px;
-    grid-row-gap: 12px;
+@media(max-width: 550px){
+    .book-preview-containter{
+        
+        grid-area: books;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(auto-fill, 370px);
+        grid-column-gap: 6px;
+        grid-row-gap: 12px;
+    }
+    .addToCart-button{
+        margin: 0 auto;
+        display: block;
+        letter-spacing: 0.02em;
+        padding: 3px;
+    }
+    .title{
+        height: 20px;
+    }
 }
+
+
+@media(min-width:550px){
+    .book-preview-containter{
+        
+        grid-area: books;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 270px);
+        grid-template-rows: repeat(auto-fill, 370px);
+        justify-content: center;
+        grid-column-gap: 6px;
+        grid-row-gap: 12px;
+    }
+
+    .book-preview:hover{
+        min-height: 380px;
+        max-height: 400px;
+        z-index: 40;
+        
+    
+        -webkit-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
+        -moz-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
+        box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
+    }
+    .book-preview:hover .title{
+        white-space: normal;
+    }
+    
+    .book-preview:hover .addToCart-button{
+        display: block;
+        justify-self: center;
+    }
+    
+    .addToCart-button{
+        display: none;
+        padding: 3px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        
+    }
+}
+
+
 
 .book-preview{
     
@@ -28,32 +94,9 @@
     border: 1px solid rgb(0,0,0,.0975);
     background-color: #fff;
 }
-.book-preview:hover{
-    min-height: 380px;
-    max-height: 400px;
-    z-index: 40;
-    
 
-    -webkit-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
-    -moz-box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
-    box-shadow: 10px 10px 31px -14px rgba(0,0,0,0.89);
-}
-.book-preview:hover .title{
-    white-space: normal;
-}
 
-.book-preview:hover .addToCart-button{
-    display: block;
-    justify-self: center;
-}
 
-.addToCart-button{
-    display: none;
-    padding: 3px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    
-}
 
 .addToCart-button:hover{
     color: rgb(0,0,0,.8);
