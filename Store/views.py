@@ -190,7 +190,7 @@ class CreateOrder(View):
     def post(self, request):
         
         order_form = OrderForm(request.POST)
-        
+            
         if order_form.is_valid():
             order = order_form.save(commit=False)
             if request.user.is_authenticated:
